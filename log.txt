@@ -1,0 +1,5 @@
+LOG - EXOPLANETS
+
+Kurve 1: Ligner en lækker exoplanet
+Kurve 2: Ligner ingen verdens ting
+Kurve 3: Ligner lidt en binær stjerne

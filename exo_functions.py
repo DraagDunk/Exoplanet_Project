@@ -16,7 +16,7 @@ now = datetime.datetime.now()
 #%% Import function
 
 def import_tess_fits(path,print_fig=False):
-    hdulist = fits.open(path)
+    hdulist = fits.open('data/'+ path)
     hdu = hdulist[1]
     
     hdu_data = hdu.data

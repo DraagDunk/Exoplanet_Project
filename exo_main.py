@@ -11,7 +11,7 @@ import exo_functions as ex
 
 plt.close('all')
 
-paths = np.genfromtxt('fits.txt', dtype=str)
+paths = np.genfromtxt('data/fits.txt', dtype=str)
 
 times =     []
 fluxes =    [] 
@@ -26,4 +26,4 @@ fluxes = np.array(fluxes)
 
 intervals = [500,250,150]
 
-norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,print_fig=True, save_fig=True)
+norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,print_fig=True, save_fig=False)

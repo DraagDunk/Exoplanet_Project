@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 # Get current time
 import datetime
 now = datetime.datetime.now()
+timestamp = str(now.year) + '-' + str(now.month) + '-' + str(now.day) + '_' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)
 
 #%% Import function
 
@@ -91,20 +92,6 @@ def normer_fluxes(times,fluxes,intervals,print_fig=False,save_fig=False):
             plt.tight_layout()
             plt.show()
             if save_fig==True:
-                plt.savefig('figures/' + 
-                            str(now.year) + 
-                            '-' + 
-                            str(now.month) + 
-                            '-' + 
-                            str(now.day) +
-                            '_' +
-                            str(now.hour) +
-                            ':' +
-                            str(now.minute) +
-                            ':' +
-                            str(now.second) +
-                            '_norm_curve' +
-                            str(i) +
-                            '.pdf')
+                plt.savefig('figures/' + timestamp + '_norm_curve' + str(i) + '.pdf')
 
     return norm_times, norm_fluxes

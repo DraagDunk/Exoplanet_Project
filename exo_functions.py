@@ -46,12 +46,13 @@ def import_tess_fits(path,print_fig=False):
     return time, sap_flux
 
 #%%
-def normer_fluxes(times,fluxes,intervals,print_fig=False,save_fig=False):
+def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=False):
     med_fluxes = []
     for i in range(len(fluxes)):
         med_flux = []
-        for j in range(len(fluxes[i])-2*intervals[i]):
-            med_flux.append(np.median(fluxes[i][j:j+2*intervals[i]]))
+        for j in range(len(fluxes[i])):
+            med_flux.append(np.median(fluxes[i][np.where(np.logical_and(times[i] > times[i][j]-intervals[i],
+            times[i] < times[i][j]+intervals[i]))]))
         med_flux = np.array(med_flux)    
         med_fluxes.append(med_flux)
     
@@ -60,23 +61,24 @@ def normer_fluxes(times,fluxes,intervals,print_fig=False,save_fig=False):
     norm_fluxes = []
     norm_times = []
     for i in range(len(fluxes)):
-        norm_flux = fluxes[i][intervals[i]:-intervals[i]]/med_fluxes[i]
+        norm_flux = fluxes[i]/med_fluxes[i]
+        norm_time = times[i][np.where(norm_flux > cutoff)]
+        norm_flux = norm_flux[np.where(norm_flux > cutoff)]
         norm_fluxes.append(norm_flux)
-        norm_time = times[i][intervals[i]:-intervals[i]]
         norm_times.append(norm_time)
     norm_fluxes = np.array(norm_fluxes)
     norm_times = np.array(norm_times)
-        
+    
     if print_fig==True:        
         for i in range(len(norm_fluxes)):
             plt.figure()
             plt.subplot(2,1,1)
-            plt.plot(norm_times[i], fluxes[i][intervals[i]:-intervals[i]], 'b,')
-            plt.plot(norm_times[i], med_fluxes[i], 'r-')
+            plt.plot(times[i], fluxes[i], 'b,')
+            plt.plot(times[i], med_fluxes[i], 'r-')
             plt.xlabel('Time [days]')
             plt.ylabel('Flux')
-            plt.axis(xmin=min(norm_times[i]),
-                     xmax=max(norm_times[i]),
+            plt.axis(xmin=min(times[i]),
+                     xmax=max(times[i]),
                      ymin=np.median(fluxes[i])-300,
                      ymax=np.median(fluxes[i])+300
                      )

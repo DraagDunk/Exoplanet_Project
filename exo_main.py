@@ -32,15 +32,16 @@ for i in range(len(paths)):
 times = np.array(times)
 fluxes = np.array(fluxes)
 
-intervals = [500,250,150]
+intervals = [1.42,0.35,0.2]
 
-norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,print_fig=True, save_fig=False)
+norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,cutoff = 0.99,print_fig=True, save_fig=False)
 
-#even_times = np.linspace(min(norm_times[0]), max(norm_times[0]), 40000)
-#flux_func = interp1d(norm_times[0], norm_fluxes[0], kind='square')
-#even_fluxes = flux_func(even_times)
+#%%
+even_times = np.linspace(norm_times[0][0], norm_times[0][-1], 22000)
+flux_func = interp1d(norm_times[0], norm_fluxes[0], kind='linear')
+even_fluxes = flux_func(even_times)
 
-#plt.figure()
-#plt.plot(norm_times, norm_fluxes, 'b,')
-#plt.plot(even_times, even_fluxes, 'r-')
-#plt.show()
+plt.figure()
+plt.plot(even_times, even_fluxes, 'r,')
+plt.plot(norm_times[0], norm_fluxes[0], 'b,')
+plt.show()

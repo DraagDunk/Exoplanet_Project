@@ -12,6 +12,13 @@ from scipy.interpolate import interp1d
 
 plt.close('all')
 
+#%% TODO
+
+# Reparer medianfilter
+# Autokorreler
+# Find periode
+# Fold til phaseplot
+
 paths = np.genfromtxt('data/fits.txt', dtype=str)
 
 times =     []
@@ -27,13 +34,13 @@ fluxes = np.array(fluxes)
 
 intervals = [500,250,150]
 
-norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,print_fig=False, save_fig=False)
+norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,print_fig=True, save_fig=False)
 
-even_times = np.linspace(min(norm_times[0]), max(norm_times[0]), 40000)
-flux_func = interp1d(norm_times[0], norm_fluxes[0], kind='cubic')
-even_fluxes = flux_func(even_times)
+#even_times = np.linspace(min(norm_times[0]), max(norm_times[0]), 40000)
+#flux_func = interp1d(norm_times[0], norm_fluxes[0], kind='square')
+#even_fluxes = flux_func(even_times)
 
-plt.figure()
-plt.plot(norm_times, norm_fluxes, 'b,')
-plt.plot(even_times, even_fluxes, 'r-')
-plt.show()
+#plt.figure()
+#plt.plot(norm_times, norm_fluxes, 'b,')
+#plt.plot(even_times, even_fluxes, 'r-')
+#plt.show()

@@ -1,5 +1,10 @@
 LOG - EXOPLANETS
 
-Kurve 1: Ligner en lækker exoplanet
-Kurve 2: Ligner ingen verdens ting
-Kurve 3: Ligner lidt en binær stjerne
+9/11-2018
+	Kurve 1: Ligner en lækker exoplanet
+	Kurve 2: Ligner ingen verdens ting
+	Kurve 3: Ligner lidt en binær stjerne
+
+13/11-2018
+	Median filter på x-akse interval i stedet for punktmængde
+

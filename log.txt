@@ -7,4 +7,11 @@ LOG - EXOPLANETS
 
 13/11-2018
 	Median filter på x-akse interval i stedet for punktmængde
-
+	Vi reparerede medianfilteret som beskrevet herover
+	Vi får bedst resultat ved flade tidskurver hvis filterbredden sættes til lige under perioden.
+	Cubic interpolering tager for lang tid, vi prøver quadratic
+	Quadratic virker heller ikke... Lineært?
+	Vi prøver med et mindre interval af dataen til interpoleringen
+	Vi fjerner al data som ligger under 0.97 i den normerede data (transitdybde på over 3% er sjældent)
+	Vi bliver nødt til at generere ny tidsakse for dette
+	Interpoleringen er overhovedet ikke grim (men den virker)

@@ -8,6 +8,7 @@ Created on Thu Nov  8 10:53:42 2018
 import numpy as np
 from astropy.io import fits
 import matplotlib.pyplot as plt
+from scipy.interpolate import interp1d
 
 # Get current time
 import datetime
@@ -97,3 +98,47 @@ def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=
                 plt.savefig('figures/' + timestamp + '_norm_curve' + str(i) + '.pdf')
 
     return norm_times, norm_fluxes
+    
+#%% Define script that can remove data
+    
+def remove_bad_data(times, fluxes, bad_data):
+    new_times = []
+    new_fluxes = []
+    for i in range(len(times)):
+        bad_index = np.array([])
+        for j in range(len(bad_data[:,0])):
+            bad_index = np.append(bad_index, np.where(np.logical_and(times[i]>bad_data[j,0], times[i]<bad_data[j,1])))
+        print(bad_index.shape)        
+        new_time = np.delete(times[i], bad_index)
+        new_times.append(new_time)
+        new_flux = np.delete(fluxes[i], bad_index)
+        new_fluxes.append(new_flux)
+    new_times = np.array(new_times)
+    new_fluxes = np.array(new_fluxes)
+    
+    return new_times, new_fluxes
+    
+#%% Define script that can interpolate data to even time step
+
+def interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False):
+
+    even_times = []
+    even_fluxes = []
+
+    for i in range(len(norm_times)):
+        even_time = np.linspace(norm_times[i][0], norm_times[i][-1], 22000)
+        flux_func = interp1d(norm_times[i], norm_fluxes[i], kind='linear')
+        even_flux = flux_func(even_time)
+        even_times.append(even_time)
+        even_fluxes.append(even_flux)
+
+    if print_fig==True:
+        for i in range(len(norm_times)):        
+            plt.figure()
+            plt.plot(even_times[i], even_fluxes[i], 'r,')
+            plt.plot(norm_times[i], norm_fluxes[i], 'b,')
+            plt.show()
+            if save_fig==True:
+                plt.savefig('figures/' + timestamp + '_inter_curve' + str(i) + '.pdf')
+                
+    return even_times, even_fluxes

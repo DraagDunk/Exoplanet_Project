@@ -15,3 +15,8 @@ LOG - EXOPLANETS
 	Vi fjerner al data som ligger under 0.97 i den normerede data (transitdybde på over 3% er sjældent)
 	Vi bliver nødt til at generere ny tidsakse for dette
 	Interpoleringen er overhovedet ikke grim (men den virker)
+
+14/11-2018
+	Vi har lavet en funktion der fjerner de dårlige data-intervaller. Den fjerner også data der hvor der er huller i dataen, bare fordi.
+	Der laves nu interp på alle tre datasæt, det er flot
+	

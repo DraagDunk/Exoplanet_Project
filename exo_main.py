@@ -8,7 +8,6 @@ Created on Thu Nov  8 11:31:16 2018
 import numpy as np
 import matplotlib.pyplot as plt
 import exo_functions as ex
-from scipy.interpolate import interp1d
 
 plt.close('all')
 
@@ -34,14 +33,12 @@ fluxes = np.array(fluxes)
 
 intervals = [1.42,0.35,0.2]
 
-norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,cutoff = 0.99,print_fig=True, save_fig=False)
+norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,cutoff = 0.985,print_fig=False, save_fig=False)
 
-#%%
-even_times = np.linspace(norm_times[0][0], norm_times[0][-1], 22000)
-flux_func = interp1d(norm_times[0], norm_fluxes[0], kind='linear')
-even_fluxes = flux_func(even_times)
+bad_data = np.array([[1338.5, 1339.7],
+                     [1347.1, 1349.4],
+                     [1367.1, 1368.65]])
+                     
+norm_times, norm_fluxes = ex.remove_bad_data(norm_times, norm_fluxes, bad_data)
 
-plt.figure()
-plt.plot(even_times, even_fluxes, 'r,')
-plt.plot(norm_times[0], norm_fluxes[0], 'b,')
-plt.show()
+even_times, even_fluxes = ex.interpolate_tess(norm_times, norm_fluxes, print_fig=True, save_fig=True)

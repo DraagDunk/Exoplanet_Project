@@ -13,7 +13,6 @@ plt.close('all')
 
 #%% TODO
 
-# Reparer medianfilter
 # Autokorreler
 # Find periode
 # Fold til phaseplot
@@ -41,4 +40,12 @@ bad_data = np.array([[1338.5, 1339.7],
                      
 norm_times, norm_fluxes = ex.remove_bad_data(norm_times, norm_fluxes, bad_data)
 
-even_times, even_fluxes = ex.interpolate_tess(norm_times, norm_fluxes, print_fig=True, save_fig=True)
+even_times, even_fluxes = ex.interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False)
+
+time_steps = even_times[:,1] - even_times[:,0]
+
+correlation_x, correlation_y = ex.correlate_tess(even_fluxes, time_steps, print_fig=True, save_fig=False)
+
+thresholds = np.array([0.003, 0.003, 0.003])
+
+peaks = ex.find_peaks(correlation_x, correlation_y, thresholds, print_fig=True)

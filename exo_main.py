@@ -13,9 +13,12 @@ plt.close('all')
 
 #%% TODO
 
-# Autokorreler
-# Find periode
 # Fold til phaseplot
+# Medianfilter på phaseplot
+
+# EKSTRA
+# Sorter mere støj fra (finmasket medianfilter)
+# Find mere nøjagtig periode (Lineær fit til korrelationspeaks)
 
 paths = np.genfromtxt('data/fits.txt', dtype=str)
 
@@ -48,4 +51,7 @@ correlation_x, correlation_y = ex.correlate_tess(even_fluxes, time_steps, print_
 
 thresholds = np.array([0.003, 0.003, 0.003])
 
-peaks = ex.find_peaks(correlation_x, correlation_y, thresholds, print_fig=True)
+centroids = ex.find_peaks(correlation_x, correlation_y, thresholds, print_fig=True, save_fig=True)
+
+periods = centroids*time_steps
+print('Periods:' + str(periods))

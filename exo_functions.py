@@ -9,6 +9,7 @@ import numpy as np
 from astropy.io import fits
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
+from scipy.optimize import curve_fit
 
 # Get current time
 import datetime
@@ -107,8 +108,7 @@ def remove_bad_data(times, fluxes, bad_data):
     for i in range(len(times)):
         bad_index = np.array([])
         for j in range(len(bad_data[:,0])):
-            bad_index = np.append(bad_index, np.where(np.logical_and(times[i]>bad_data[j,0], times[i]<bad_data[j,1])))
-        print(bad_index.shape)        
+            bad_index = np.append(bad_index, np.where(np.logical_and(times[i]>bad_data[j,0], times[i]<bad_data[j,1])))       
         new_time = np.delete(times[i], bad_index)
         new_times.append(new_time)
         new_flux = np.delete(fluxes[i], bad_index)
@@ -152,12 +152,11 @@ def correlate_tess(even_fluxes, time_steps, print_fig=False, save_fig=False):
     correlation_spectra = []
     for i in range(len(time_steps)):
         corr = np.correlate(1-even_fluxes[i], 1-even_fluxes[i], mode='full')
-        print(len(corr))
         corr = corr[int((len(corr)-1)/2):-1]
         correlation_spectra.append(corr)
     correlation_spectra = np.array(correlation_spectra)
     
-    correlation_x = np.linspace(0, (len(correlation_spectra[0])-1)/2, len(correlation_spectra[0]))
+    correlation_x = np.linspace(0, (len(correlation_spectra[0])), len(correlation_spectra[0]))
     
 #    right_index = np.where(correlation_x >= 0)    
 #    correlation_x = correlation_x[right_index]    
@@ -178,7 +177,10 @@ def correlate_tess(even_fluxes, time_steps, print_fig=False, save_fig=False):
     return correlation_x, correlation_spectra
     
 #%% Define a function that can find peaks in correlation spectrum
-    
+
+def gaussian(x, a, b, c):
+    return a * np.exp( - (x - b)**2 / (2*c**2) )
+
 def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_fig=False):
     peaks = []    
     for i in range(len(correlation_y[:,0])):
@@ -189,6 +191,35 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
                     peaks_temp.append(j+1)
         peaks.append(np.array(peaks_temp))
     peaks = np.array(peaks)
+
+    for h in range(len(peaks)):
+        if len(peaks[h]) > 0:
+            delete_index = []
+            for i in range(len(peaks[h])-1):
+                if abs(peaks[h][i]-peaks[h][i+1]) < 100:
+                    if correlation_y[h][peaks[h][i]] < correlation_y[h][peaks[h][i+1]]:
+                        delete_index.append(i)
+                    elif correlation_y[h][peaks[h][i]] > correlation_y[h][peaks[h][i+1]]:
+                        delete_index.append(i+1)
+                    i = i-1
+            delete_index = np.array(delete_index)
+            peaks[h] = np.delete(peaks[h], delete_index)
+    print(peaks)
+            
+    popts = []
+    centroids = []     
+    for i in range(len(peaks)):
+        if len(peaks[i]) > 0:
+            popt, pcov = curve_fit(gaussian, correlation_x, correlation_y[i], 
+                                   bounds = ([correlation_y[i][peaks[i][-1]]-0.01, peaks[i][-1]-20, 0],
+                                             [correlation_y[i][peaks[i][-1]]+0.01, peaks[i][-1]+20, 50]))
+            popts.append(popt)
+            centroids.append(popt[1]/len(peaks[i]))
+        else:
+            popts.append(42)
+            centroids.append(-1)
+            
+    centroids = np.array(centroids)
     
     if print_fig == True:
         for i in range(len(correlation_y[:,0])):
@@ -196,6 +227,7 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
                 plt.figure()
                 plt.plot(correlation_x, correlation_y[i], 'b-')
                 plt.plot(correlation_x[peaks[i]], correlation_y[i,peaks[i]], 'r*')
+                plt.plot(correlation_x, gaussian(correlation_x, *popts[i]), 'k--')
                 plt.xlabel('Points')
                 plt.ylabel('Correlation function')
                 plt.tight_layout()
@@ -203,4 +235,4 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
                 if save_fig == True:
                     plt.savefig('figures/' + timestamp + '_peaks_fig' + str(i) + '.pdf')
         
-    return peaks
+    return centroids

@@ -103,20 +103,16 @@ def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=
 #%% Define script that can remove data
     
 def remove_bad_data(times, fluxes, bad_data):
-    new_times = []
     new_fluxes = []
     for i in range(len(times)):
         bad_index = np.array([])
         for j in range(len(bad_data[:,0])):
             bad_index = np.append(bad_index, np.where(np.logical_and(times[i]>bad_data[j,0], times[i]<bad_data[j,1])))       
-        new_time = np.delete(times[i], bad_index)
-        new_times.append(new_time)
-        new_flux = np.delete(fluxes[i], bad_index)
-        new_fluxes.append(new_flux)
-    new_times = np.array(new_times)
+        fluxes[i][bad_index.astype(int)] = 1
+        new_fluxes.append(fluxes[i])
     new_fluxes = np.array(new_fluxes)
     
-    return new_times, new_fluxes
+    return new_fluxes
     
 #%% Define script that can interpolate data to even time step
 
@@ -236,3 +232,43 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
                     plt.savefig('figures/' + timestamp + '_peaks_fig' + str(i) + '.pdf')
         
     return centroids
+#%%
+def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,print_fig = False,save_fig = False):
+    binned_times = []
+    binned_fluxes = []
+    for j in range(len(norm_times)):
+        if periods[j] > 0: 
+            phase_time = norm_times[j]%periods[j]
+            bins = np.linspace(0,periods[j],np.floor(len(norm_times[j])/((norm_times[j][-1]-norm_times[j][0])/periods[j])))
+            
+            binned_flux = []
+            binned_time = []
+            for i in range(len(bins)-1):
+                binned_flux.append(np.median(norm_fluxes[j][np.where(np.logical_and(phase_time >= bins[i], phase_time < bins[i+1]))]))    
+                binned_time.append(np.median(phase_time[np.where(np.logical_and(phase_time >= bins[i], phase_time < bins[i+1]))]))
+    
+            binned_flux = np.array(binned_flux)
+            binned_time = np.array(binned_time)
+        else:
+            binned_time = -1
+            binned_flux = -1
+            
+        binned_fluxes.append(binned_flux)
+        binned_times.append(binned_time)
+        
+        if print_fig == True and periods[j] > 0:
+            plt.figure()
+            plt.plot(phase_time,norm_fluxes[j],',r')
+            plt.plot(binned_time,binned_flux,'.k')
+            plt.ylabel('Normalized median Flux')
+            plt.xlabel('Time modulo Period [Days]')
+            plt.title('Folded Light Curve')
+            plt.tight_layout()
+            plt.show()
+            if save_fig == True:
+                    plt.savefig('figures/' + timestamp + '_Folded' + str(j) + '.pdf')
+    
+    binned_fluxes = np.array(binned_fluxes)
+    binned_times = np.array(binned_times)
+
+    return binned_times, binned_fluxes

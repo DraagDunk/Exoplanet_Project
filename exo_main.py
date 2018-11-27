@@ -33,25 +33,27 @@ for i in range(len(paths)):
 times = np.array(times)
 fluxes = np.array(fluxes)
 
-intervals = [1.42,0.35,0.2]
+intervals = [1.42,0.35,0.7,0.2]
 
-norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,cutoff = 0.985,print_fig=False, save_fig=False)
+norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,cutoff = 0.985,print_fig=True, save_fig=False)
 
 bad_data = np.array([[1338.5, 1339.7],
                      [1347.1, 1349.4],
                      [1367.1, 1368.65]])
                      
-norm_times, norm_fluxes = ex.remove_bad_data(norm_times, norm_fluxes, bad_data)
+norm_fluxes = ex.remove_bad_data(norm_times, norm_fluxes, bad_data)
 
-even_times, even_fluxes = ex.interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False)
+even_times, even_fluxes = ex.interpolate_tess(norm_times, norm_fluxes, print_fig=True, save_fig=False)
 
 time_steps = even_times[:,1] - even_times[:,0]
 
 correlation_x, correlation_y = ex.correlate_tess(even_fluxes, time_steps, print_fig=True, save_fig=False)
 
-thresholds = np.array([0.003, 0.003, 0.003])
+thresholds = np.array([0.003, 0.003, 0.003, 0.003])
 
-centroids = ex.find_peaks(correlation_x, correlation_y, thresholds, print_fig=True, save_fig=True)
+centroids = ex.find_peaks(correlation_x, correlation_y, thresholds, print_fig=True, save_fig=False)
 
 periods = centroids*time_steps
 print('Periods:' + str(periods))
+
+binned_times, binned_fluxes = ex.bin_fluxes_and_times_tess(norm_times, norm_fluxes, periods, print_fig = True)

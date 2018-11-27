@@ -46,8 +46,72 @@ def import_tess_fits(path,print_fig=False):
         plt.ylabel('flux')
     
     return time, sap_flux
-
+    
 #%%
+
+def fine_mesh_filter_tess(times, fluxes, n_sigmas, print_fig=False, save_fig=False):
+    med_fluxes = []
+    for i in range(len(fluxes)):
+        med_flux = []
+        for j in range(len(fluxes[i])-2):
+            med_flux.append(np.median(fluxes[i][j:j+3]))
+        med_flux = np.array(med_flux)
+        
+        med_fluxes.append(med_flux)
+    
+    med_fluxes = np.array(med_fluxes)
+    
+    old_fluxes = np.copy(fluxes)
+    old_times = np.copy(times)
+    
+    for i in range(len(med_fluxes)):
+        fluxes[i] = fluxes[i][1:-1]
+        times[i] = times[i][1:-1]  
+        norm_flux = fluxes[i]/med_fluxes[i]
+        sigma = np.std(norm_flux)
+        fluxes[i] = fluxes[i][np.where(np.logical_and(norm_flux-1 < n_sigmas[i]*sigma, 
+                                                      norm_flux-1 > -n_sigmas[i]*sigma))]
+        times[i] = times[i][np.where(np.logical_and(norm_flux-1 < n_sigmas[i]*sigma,
+                                                    norm_flux-1 > -n_sigmas[i]*sigma))]                             
+        
+        if print_fig == True:
+            fig = plt.figure()
+            plt.title('Fine-mesh normalization')
+            ax1 = plt.subplot(3,1,1)
+            ax1.set_xticklabels([])
+            plt.plot(old_times[i], old_fluxes[i], 'k,')
+            plt.plot(old_times[i][1:-1], med_fluxes[i], 'r-')
+#            plt.xlabel('Time [days]')
+            plt.ylabel('Flux [ADU]')
+            plt.xlim(old_times[i][0], old_times[i][-1])
+            plt.ylim(np.median(old_fluxes[i])-300, np.median(old_fluxes[i])+300)
+            ax2 = plt.subplot(3,1,2)
+            ax2.set_xticklabels([])            
+            plt.plot(old_times[i][1:-1], norm_flux, 'k,')
+            plt.plot([times[i][0], times[i][-1]], np.array([n_sigmas[i]*sigma, n_sigmas[i]*sigma])+1, 'r--')            
+            plt.plot([times[i][0], times[i][-1]], np.array([-n_sigmas[i]*sigma, -n_sigmas[i]*sigma])+1, 'r--')
+#            plt.xlabel('Time [days]')
+            plt.ylabel('Normalized flux')
+            plt.xlim(old_times[i][0], old_times[i][-1])
+            plt.ylim(1-0.7*sigma, 1+0.7*sigma)
+            plt.subplot(3,1,3)
+            plt.plot(old_times[i], old_fluxes[i], 'k,')
+            plt.plot(times[i], fluxes[i], 'r,')
+            plt.xlabel('Time [days]')
+            plt.ylabel('Flux [ADU]')
+            plt.xlim(old_times[i][0], old_times[i][-1])
+            plt.ylim(np.median(old_fluxes[i])-300, np.median(old_fluxes[i])+300)            
+            fig.subplots_adjust(wspace=0, hspace=0)            
+            plt.tight_layout()
+            plt.show()
+            if save_fig == True:
+                plt.savefig('figures/' + timestamp + '_fine_mesh' + str(i) + '.pdf')
+            
+    
+    return times, fluxes
+
+#%% Define script that can normalize light curve
+
 def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=False):
     med_fluxes = []
     for i in range(len(fluxes)):
@@ -145,9 +209,15 @@ def interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False):
 #%% Define function that can autocorrelate    
 
 def correlate_tess(even_fluxes, time_steps, print_fig=False, save_fig=False):
+
+    zero_point = 1
+
+    for i in range(len(even_fluxes)):
+        even_fluxes[i][np.where(even_fluxes[i] > zero_point)] = zero_point
+    
     correlation_spectra = []
     for i in range(len(time_steps)):
-        corr = np.correlate(1-even_fluxes[i], 1-even_fluxes[i], mode='full')
+        corr = np.correlate(zero_point-even_fluxes[i], zero_point-even_fluxes[i], mode='full')
         corr = corr[int((len(corr)-1)/2):-1]
         correlation_spectra.append(corr)
     correlation_spectra = np.array(correlation_spectra)
@@ -183,23 +253,24 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
         peaks_temp = []        
         for j in range(len(correlation_y[i])-2):
             if correlation_y[i,j] <= correlation_y[i,j+1] >= correlation_y[i,j+2]:
-                if correlation_y[i,j+1]-correlation_y[i,j-99] >= thresholds[i] and correlation_y[i,j+1]-correlation_y[i,j+101] >= thresholds[i]:
+                if correlation_y[i,j+1]-correlation_y[i,j-199] >= thresholds[i] and correlation_y[i,j+1]-correlation_y[i,j+201] >= thresholds[i]:
                     peaks_temp.append(j+1)
         peaks.append(np.array(peaks_temp))
     peaks = np.array(peaks)
 
     for h in range(len(peaks)):
         if len(peaks[h]) > 0:
-            delete_index = []
-            for i in range(len(peaks[h])-1):
-                if abs(peaks[h][i]-peaks[h][i+1]) < 100:
-                    if correlation_y[h][peaks[h][i]] < correlation_y[h][peaks[h][i+1]]:
-                        delete_index.append(i)
-                    elif correlation_y[h][peaks[h][i]] > correlation_y[h][peaks[h][i+1]]:
-                        delete_index.append(i+1)
-                    i = i-1
-            delete_index = np.array(delete_index)
-            peaks[h] = np.delete(peaks[h], delete_index)
+            delete_index = [1]
+            while len(delete_index) > 0:
+                delete_index = []
+                for i in range(len(peaks[h])-1):
+                    if abs(peaks[h][i]-peaks[h][i+1]) < 100:
+                        if correlation_y[h][peaks[h][i]] < correlation_y[h][peaks[h][i+1]]:
+                            delete_index.append(i)
+                        elif correlation_y[h][peaks[h][i]] > correlation_y[h][peaks[h][i+1]]:
+                            delete_index.append(i+1)
+                delete_index = np.array(delete_index)
+                peaks[h] = np.delete(peaks[h], delete_index)
     print(peaks)
             
     popts = []
@@ -232,13 +303,15 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
                     plt.savefig('figures/' + timestamp + '_peaks_fig' + str(i) + '.pdf')
         
     return centroids
-#%%
-def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,print_fig = False,save_fig = False):
+    
+#%% Define function that can bin and phasefold transit light curves
+
+def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,offsets,print_fig = False,save_fig = False):
     binned_times = []
     binned_fluxes = []
     for j in range(len(norm_times)):
         if periods[j] > 0: 
-            phase_time = norm_times[j]%periods[j]
+            phase_time = (norm_times[j]+offsets[j])%periods[j]
             bins = np.linspace(0,periods[j],np.floor(len(norm_times[j])/((norm_times[j][-1]-norm_times[j][0])/periods[j])))
             
             binned_flux = []
@@ -263,6 +336,7 @@ def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,print_fig = False,s
             plt.ylabel('Normalized median Flux')
             plt.xlabel('Time modulo Period [Days]')
             plt.title('Folded Light Curve')
+            plt.xlim(0, periods[j])
             plt.tight_layout()
             plt.show()
             if save_fig == True:

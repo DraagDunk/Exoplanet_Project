@@ -16,8 +16,9 @@ import datetime
 now = datetime.datetime.now()
 timestamp = str(now.year) + '-' + str(now.month) + '-' + str(now.day) + '_' + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second)
 
-#%% Import function
+#%% Function that imports data from .fits file, and returns time and SAP flux
 
+# path: name of .fits file
 def import_tess_fits(path,print_fig=False):
     hdulist = fits.open('data/'+ path)
     hdu = hdulist[1]
@@ -28,6 +29,7 @@ def import_tess_fits(path,print_fig=False):
     sap_flux = []
     pdc_flux = []
     
+    # Remove NaN from data
     for i in range(len(hdu_data)):
         if np.isnan(hdu_data[i][3])==False:
             time.append(hdu_data[i][0])
@@ -38,6 +40,7 @@ def import_tess_fits(path,print_fig=False):
     sap_flux =  np.array(sap_flux)
     pdc_flux =  np.array(pdc_flux)
     
+    # Plot raw data
     if print_fig==True:    
         plt.figure()
         plt.plot(time, sap_flux, ',')
@@ -47,8 +50,11 @@ def import_tess_fits(path,print_fig=False):
     
     return time, sap_flux
     
-#%%
+#%% Function that removes noise through a fine-mesh median filter
 
+# times:    Array of arrays of time 
+# fluxes:   Array of arrays of flux
+# n_sigmas: List of number of standard deviations that should be included in data
 def fine_mesh_filter_tess(times, fluxes, n_sigmas, print_fig=False, save_fig=False):
     med_fluxes = []
     for i in range(len(fluxes)):
@@ -61,9 +67,11 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, print_fig=False, save_fig=Fal
     
     med_fluxes = np.array(med_fluxes)
     
+    # Keep old data before filtering
     old_fluxes = np.copy(fluxes)
     old_times = np.copy(times)
     
+    # Remove data further from median than n_sigmas specifies
     for i in range(len(med_fluxes)):
         fluxes[i] = fluxes[i][1:-1]
         times[i] = times[i][1:-1]  
@@ -74,26 +82,28 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, print_fig=False, save_fig=Fal
         times[i] = times[i][np.where(np.logical_and(norm_flux-1 < n_sigmas[i]*sigma,
                                                     norm_flux-1 > -n_sigmas[i]*sigma))]                             
         
+        # Plot 3 subplots of data filtering
         if print_fig == True:
             fig = plt.figure()
             plt.title('Fine-mesh normalization')
+            # Old data and median filter
             ax1 = plt.subplot(3,1,1)
             ax1.set_xticklabels([])
             plt.plot(old_times[i], old_fluxes[i], 'k,')
             plt.plot(old_times[i][1:-1], med_fluxes[i], 'r-')
-#            plt.xlabel('Time [days]')
             plt.ylabel('Flux [ADU]')
             plt.xlim(old_times[i][0], old_times[i][-1])
             plt.ylim(np.median(old_fluxes[i])-300, np.median(old_fluxes[i])+300)
+            # Normalized data and data cutoff boundaries
             ax2 = plt.subplot(3,1,2)
             ax2.set_xticklabels([])            
             plt.plot(old_times[i][1:-1], norm_flux, 'k,')
             plt.plot([times[i][0], times[i][-1]], np.array([n_sigmas[i]*sigma, n_sigmas[i]*sigma])+1, 'r--')            
             plt.plot([times[i][0], times[i][-1]], np.array([-n_sigmas[i]*sigma, -n_sigmas[i]*sigma])+1, 'r--')
-#            plt.xlabel('Time [days]')
             plt.ylabel('Normalized flux')
             plt.xlim(old_times[i][0], old_times[i][-1])
             plt.ylim(1-0.7*sigma, 1+0.7*sigma)
+            # Comparison between old and new data
             plt.subplot(3,1,3)
             plt.plot(old_times[i], old_fluxes[i], 'k,')
             plt.plot(times[i], fluxes[i], 'r,')
@@ -110,9 +120,14 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, print_fig=False, save_fig=Fal
     
     return times, fluxes
 
-#%% Define script that can normalize light curve
+#%% Script that can normalize light curve and return normalized flux
 
+# times:        Array of arrays of time
+# fluxes:       Array of arrays of flux
+# intervals:    List of half-width of the time interval each point is calculated from in median filter
+# cutoff:       Lower flux limit for inclusion of data
 def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=False):
+    # Calculate median filter from all points within twice the "intervals"    
     med_fluxes = []
     for i in range(len(fluxes)):
         med_flux = []
@@ -124,6 +139,7 @@ def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=
     
     med_fluxes=np.array(med_fluxes)
     
+    # Normalize data by dividing the data with the median filter
     norm_fluxes = []
     norm_times = []
     for i in range(len(fluxes)):
@@ -135,9 +151,11 @@ def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=
     norm_fluxes = np.array(norm_fluxes)
     norm_times = np.array(norm_times)
     
+    # Plot 2 subplots
     if print_fig==True:        
         for i in range(len(norm_fluxes)):
             plt.figure()
+            # Data and median filter
             plt.subplot(2,1,1)
             plt.plot(times[i], fluxes[i], 'b,')
             plt.plot(times[i], med_fluxes[i], 'r-')
@@ -148,6 +166,7 @@ def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=
                      ymin=np.median(fluxes[i])-300,
                      ymax=np.median(fluxes[i])+300
                      )
+            # Normalized data
             plt.subplot(2,1,2)
             plt.plot(norm_times[i],norm_fluxes[i],'k,')
             plt.xlabel('Time [days]')
@@ -164,8 +183,11 @@ def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=
 
     return norm_times, norm_fluxes
     
-#%% Define script that can remove data
+#%% Script that can set normalized data in specific time periods to 1
     
+# times:    Array of arrays of time
+# fluxes:   Array of arrays of flux
+# bad_data: 2D-array of times. Data between the two times in rows should be =1
 def remove_bad_data(times, fluxes, bad_data):
     new_fluxes = []
     for i in range(len(times)):
@@ -178,13 +200,16 @@ def remove_bad_data(times, fluxes, bad_data):
     
     return new_fluxes
     
-#%% Define script that can interpolate data to even time step
+#%% Script that can interpolate data to even time step and return interpolated data
 
+# norm_times:   Array of arrays of time
+# norm_fluxes:  Array of arrays of normalized flux
 def interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False):
 
     even_times = []
     even_fluxes = []
-
+    
+    # Interpolates data to 22000 points, equidistant along time axis
     for i in range(len(norm_times)):
         even_time = np.linspace(norm_times[i][0], norm_times[i][-1], 22000)
         flux_func = interp1d(norm_times[i], norm_fluxes[i], kind='linear')
@@ -192,6 +217,7 @@ def interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False):
         even_times.append(even_time)
         even_fluxes.append(even_flux)
 
+    # Plot old data and interpolated data
     if print_fig==True:
         for i in range(len(norm_times)):        
             plt.figure()
@@ -206,16 +232,19 @@ def interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False):
 
     return even_times, even_fluxes
     
-#%% Define function that can autocorrelate    
+#%% Script that can autocorrelate interpolated flux and return correlation spectra
 
+# even_fluxes:  Array of arrays of interpolated flux
+# time_steps:   List of distances between all points in time
 def correlate_tess(even_fluxes, time_steps, print_fig=False, save_fig=False):
 
+    # Autocorrelate all data below this normalized flux value
     zero_point = 1
-
     for i in range(len(even_fluxes)):
         even_fluxes[i][np.where(even_fluxes[i] > zero_point)] = zero_point
     
     correlation_spectra = []
+    # Spectrum is inverted before correlation for positive signal
     for i in range(len(time_steps)):
         corr = np.correlate(zero_point-even_fluxes[i], zero_point-even_fluxes[i], mode='full')
         corr = corr[int((len(corr)-1)/2):-1]
@@ -224,11 +253,7 @@ def correlate_tess(even_fluxes, time_steps, print_fig=False, save_fig=False):
     
     correlation_x = np.linspace(0, (len(correlation_spectra[0])), len(correlation_spectra[0]))
     
-#    right_index = np.where(correlation_x >= 0)    
-#    correlation_x = correlation_x[right_index]    
-#    for i in range(len(correlation_spectra[:,0])):
-#        correlation_spectra[i,:] = correlation_spectra[i, right_index]
-    
+    # Plot correlation spectrum
     if print_fig == True:
         for i in range(len(time_steps)):
             plt.figure()
@@ -242,13 +267,18 @@ def correlate_tess(even_fluxes, time_steps, print_fig=False, save_fig=False):
             
     return correlation_x, correlation_spectra
     
-#%% Define a function that can find peaks in correlation spectrum
+#%% Script that can find peaks in correlation spectrum and return a list of centroids
 
+# Define gaussian function
 def gaussian(x, a, b, c):
     return a * np.exp( - (x - b)**2 / (2*c**2) )
 
+# correlation_x:    Array of arrays of steps taken in correlation
+# correlation_y:    Array of arrays of correlation spectra
+# thresholds:       List of vertical distance boundaries from peak to noise
 def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_fig=False):
     peaks = []    
+    # Find maxima that are farther from noise than the thresholds specify   
     for i in range(len(correlation_y[:,0])):
         peaks_temp = []        
         for j in range(len(correlation_y[i])-2):
@@ -258,6 +288,7 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
         peaks.append(np.array(peaks_temp))
     peaks = np.array(peaks)
 
+    # Only allow one peak within 100 points; find the tallest one, delete all others
     for h in range(len(peaks)):
         if len(peaks[h]) > 0:
             delete_index = [1]
@@ -271,10 +302,15 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
                             delete_index.append(i+1)
                 delete_index = np.array(delete_index)
                 peaks[h] = np.delete(peaks[h], delete_index)
+                
+    # Handy print of lists of peaks
+    print('=========Array of found peaks:=========')
     print(peaks)
+    print('=======================================')
             
     popts = []
-    centroids = []     
+    centroids = []
+    # Fit gaussian functions to left-most peak (Redo to fit to all peaks and find period from all)
     for i in range(len(peaks)):
         if len(peaks[i]) > 0:
             popt, pcov = curve_fit(gaussian, correlation_x, correlation_y[i], 
@@ -285,9 +321,11 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
         else:
             popts.append(42)
             centroids.append(-1)
-            
+    
+    # centroids aren't really centroids, but periods.            
     centroids = np.array(centroids)
     
+    # Plot correlation spectra with gaussians and peaks
     if print_fig == True:
         for i in range(len(correlation_y[:,0])):
             if len(peaks[i]) > 0:
@@ -304,14 +342,19 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
         
     return centroids
     
-#%% Define function that can bin and phasefold transit light curves
+#%% Script that can bin and phasefold transit light curves and return binned data
 
+# norm_times:   Array of arrays of time
+# norm_fluxes:  Array of arrays of normalized flux
+# periods:      List of periods
+# offsets:      List of phase offsets
 def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,offsets,print_fig = False,save_fig = False):
     binned_times = []
     binned_fluxes = []
     for j in range(len(norm_times)):
         if periods[j] > 0: 
             phase_time = (norm_times[j]+offsets[j])%periods[j]
+            # Bin length is set to length of the data set divided by the number of folds
             bins = np.linspace(0,periods[j],np.floor(len(norm_times[j])/((norm_times[j][-1]-norm_times[j][0])/periods[j])))
             
             binned_flux = []
@@ -329,6 +372,7 @@ def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,offsets,print_fig =
         binned_fluxes.append(binned_flux)
         binned_times.append(binned_time)
         
+        # Plot normalized data and binned data
         if print_fig == True and periods[j] > 0:
             plt.figure()
             plt.plot(phase_time,norm_fluxes[j],',r')

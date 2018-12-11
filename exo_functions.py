@@ -55,7 +55,7 @@ def import_tess_fits(path,print_fig=False):
 # times:    Array of arrays of time 
 # fluxes:   Array of arrays of flux
 # n_sigmas: List of number of standard deviations that should be included in data
-def fine_mesh_filter_tess(times, fluxes, n_sigmas, print_fig=False, save_fig=False):
+def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, print_fig=False, save_fig=False):
     med_fluxes = []
     for i in range(len(fluxes)):
         med_flux = []
@@ -115,7 +115,7 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, print_fig=False, save_fig=Fal
             plt.tight_layout()
             plt.show()
             if save_fig == True:
-                plt.savefig('figures/' + timestamp + '_fine_mesh' + str(i) + '.pdf')
+                plt.savefig('figures/' + timestamp + '_finemesh_TIC' + TICs[i] + '.pdf')
             
     
     return times, fluxes
@@ -126,7 +126,7 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, print_fig=False, save_fig=Fal
 # fluxes:       Array of arrays of flux
 # intervals:    List of half-width of the time interval each point is calculated from in median filter
 # cutoff:       Lower flux limit for inclusion of data
-def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=False):
+def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,TICs,print_fig=False,save_fig=False):
     # Calculate median filter from all points within twice the "intervals"    
     med_fluxes = []
     for i in range(len(fluxes)):
@@ -179,7 +179,7 @@ def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,print_fig=False,save_fig=
             plt.tight_layout()
             plt.show()
             if save_fig==True:
-                plt.savefig('figures/' + timestamp + '_norm_curve' + str(i) + '.pdf')
+                plt.savefig('figures/' + timestamp + '_normcurve_TIC' + TICs[i] + '.pdf')
 
     return norm_times, norm_fluxes
     
@@ -204,7 +204,7 @@ def remove_bad_data(times, fluxes, bad_data):
 
 # norm_times:   Array of arrays of time
 # norm_fluxes:  Array of arrays of normalized flux
-def interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False):
+def interpolate_tess(norm_times, norm_fluxes, TICs, print_fig=False, save_fig=False):
 
     even_times = []
     even_fluxes = []
@@ -225,7 +225,7 @@ def interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False):
             plt.plot(norm_times[i], norm_fluxes[i], 'b,')
             plt.show()
             if save_fig==True:
-                plt.savefig('figures/' + timestamp + '_inter_curve' + str(i) + '.pdf')
+                plt.savefig('figures/' + timestamp + '_intercurve_TIC' + TICs[i] + '.pdf')
              
     even_times = np.array(even_times)
     even_fluxes = np.array(even_fluxes)
@@ -236,7 +236,7 @@ def interpolate_tess(norm_times, norm_fluxes, print_fig=False, save_fig=False):
 
 # even_fluxes:  Array of arrays of interpolated flux
 # time_steps:   List of distances between all points in time
-def correlate_tess(even_fluxes, time_steps, print_fig=False, save_fig=False):
+def correlate_tess(even_fluxes, time_steps, TICs, print_fig=False, save_fig=False):
 
     # Autocorrelate all data below this normalized flux value
     zero_point = 1
@@ -263,7 +263,7 @@ def correlate_tess(even_fluxes, time_steps, print_fig=False, save_fig=False):
             plt.tight_layout()
             plt.show()
             if save_fig == True:
-                plt.savefig('figures/' + timestamp + '_correlation_fig' + str(i) + '.pdf')
+                plt.savefig('figures/' + timestamp + '_correlation_TIC' + TICs[i] + '.pdf')
             
     return correlation_x, correlation_spectra
     
@@ -276,7 +276,7 @@ def gaussian(x, a, b, c):
 # correlation_x:    Array of arrays of steps taken in correlation
 # correlation_y:    Array of arrays of correlation spectra
 # thresholds:       List of vertical distance boundaries from peak to noise
-def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_fig=False):
+def find_peaks(correlation_x, correlation_y, thresholds, TICs, print_fig=False, save_fig=False):
     peaks = []    
     # Find maxima that are farther from noise than the thresholds specify   
     for i in range(len(correlation_y[:,0])):
@@ -338,7 +338,7 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
                 plt.tight_layout()
                 plt.show()
                 if save_fig == True:
-                    plt.savefig('figures/' + timestamp + '_peaks_fig' + str(i) + '.pdf')
+                    plt.savefig('figures/' + timestamp + '_peaks_TIC' + TICs[i] + '.pdf')
         
     return centroids
     
@@ -348,7 +348,7 @@ def find_peaks(correlation_x, correlation_y, thresholds, print_fig=False, save_f
 # norm_fluxes:  Array of arrays of normalized flux
 # periods:      List of periods
 # offsets:      List of phase offsets
-def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,offsets,print_fig = False,save_fig = False):
+def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,offsets,TICs,print_fig = False,save_fig = False):
     binned_times = []
     binned_fluxes = []
     for j in range(len(norm_times)):
@@ -384,7 +384,7 @@ def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,offsets,print_fig =
             plt.tight_layout()
             plt.show()
             if save_fig == True:
-                    plt.savefig('figures/' + timestamp + '_Folded' + str(j) + '.pdf')
+                    plt.savefig('figures/' + timestamp + '_Folded_TIC' + TICs[j] + '.pdf')
     
     binned_fluxes = np.array(binned_fluxes)
     binned_times = np.array(binned_times)

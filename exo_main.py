@@ -8,7 +8,7 @@ Created on Thu Nov  8 11:31:16 2018
 import numpy as np
 import matplotlib.pyplot as plt
 import exo_functions as ex
-
+import pymc
 from PyAstronomy.modelSuite import forTrans as ft
 from PyAstronomy import funcFit as fuf
 
@@ -67,13 +67,12 @@ binned_times, binned_fluxes = ex.bin_fluxes_and_times_tess(norm_times, norm_flux
 
 #%%
 ma = ft.MandelAgolLC(orbit="keplerian", ld="quad")
-data=np.genfromtxt("rap6.ascii", unpack=True)
 time = binned_times[0]
 flux = binned_fluxes[0]
 
 period = periods[0]
 a_in_stellar_rad = 10
-inclination = 60
+inclination = 80
 radius_ratio = np.sqrt(1 - np.min(flux))
 lin_Limb = 0.4048
 quad_Limb = 0.2695
@@ -83,74 +82,82 @@ eccentricity = 0.10
 
 ma["per"] = period; ma["i"] = inclination; ma["a"] = a_in_stellar_rad;
 ma["p"] = radius_ratio; ma["linLimb"] = lin_Limb; ma["quadLimb"] = quad_Limb;
-ma["e"] = eccentricity; ma["T0"] = T0
+ma["e"] = eccentricity; ma["tau"] = T0
 
 data_til_err = flux[0:60]
 err = np.std(data_til_err)
-
+t_offset = time_steps[0]*len(time)/2
 
 errors = err*np.ones(len(flux))
-ma.thaw(["i","a","p","linLimb","quadLimb","e","T0"])
+ma.thaw(["i","a","p","e","tau"])
 
-#==============================================================================
-# 
-# X0 = {"i_Occultquad":ma["i_Occultquad"],"a_Occultquad":ma["a_Occultquad"],\
-#     "p_Occultquad":ma["p_Occultquad"]}
-# 
-# Lims = {"i_Occultquad":[80.,90.],"a_Occultquad":[0.,15],"p_Occultquad":[0.,0.5]}
-#     
-# steps = {"i_Occultquad":0.5,"a_Occultquad":0.5,"p_Occultquad":0.01}
-# 
-# ma.fitMCMC(time,flux,X0,Lims,steps,errors,iter = 100000,dbfile = "mcmctest3.tmp"\
-#  ,burn = 0, quiet = True)
-# 
-# ma.parameterSummary()
-# #%%
-# MCMC_fit = ma.model
-# 
-# data_til_err = flux[0:60]
-# err = np.std(data_til_err) 
-# 
-# n = len(flux)
-# chi_square = sum(((flux-MCMC_fit)**2)/err**2)
-# k = 4
-# 
-# plt.plot(time,flux,'.b')
-# plt.plot(time,MCMC_fit,'-r')
-# plt.show()
-# 
-# BIC = chi_square + k*np.log(n) 
-# print(BIC) 
-# #%%
-# db = pymc.database.pickle.load('mcmctest3.tmp')
-# ta = fuf.TraceAnalysis("mcmctest3.tmp")
-# 
-# plt.hist(db.trace("i_Occultquad", 0)[:])
-# plt.show()
-# ta.plotTrace("i_Occultquad")
-# ta.show()
-# 
-# plt.hist(db.trace("a_Occultquad", 0)[:])
-# plt.show()
-# ta.plotTrace("a_Occultquad")
-# ta.show()
-# 
-# plt.hist(db.trace("p_Occultquad", 0)[:])
-# plt.show()
-# ta.plotTrace("p_Occultquad")
-# ta.show()
-# 
-# #%%
-# 
-# ta.correlationTable(coeff = "spearman")
-# ta.correlationTable(coeff = "pearson")
-# 
-# #%%
-# print("Available parameters: ", ta.availableParameters())
-# 
-# for p in ta.availableParameters():
-#   hpd = ta.hpd(p, cred=0.95)
-#   print("Parameter %5s, mean = % g, median = % g, std = % g, 95%% HPD = % g - % g" \
-#         % (p, ta.mean(p), ta.median(p), ta.std(p), hpd[0], hpd[1]))
-# 
-#==============================================================================
+
+X0 = {"i":ma["i"],"a":ma["a"],"p":ma["p"],"e":ma["e"],"tau":ma["tau"]}
+
+Lims = {"i":[75.,90.],"a":[5.,100],"p":[0.,0.5],"e":[0.,0.7],"tau":[T0-t_offset,T0+t_offset]}
+    
+steps = {"i":0.5,"a":0.5,"p":0.01,"e":0.01,"tau":time_steps[0]}
+
+ma.fitMCMC(time,flux,X0,Lims,steps,errors,iter = 100000,dbfile = "mcmc_test.tmp"\
+ ,burn = 0, quiet = True)
+
+ma.parameterSummary()
+
+MCMC_fit = ma.model
+
+
+#%%
+
+plt.figure()
+plt.plot(time,flux,'.b')
+plt.plot(time,MCMC_fit,'-r')
+plt.title('MCMC fit of MA-model to transit')
+plt.xlabel('Time % period [days]')
+plt.ylabel('Normalized flux')
+plt.show()
+
+db = pymc.database.pickle.load('mcmc_test.tmp')
+ta = fuf.TraceAnalysis("mcmc_test.tmp")
+
+print("Available parameters: ", ta.availableParameters())
+
+for p in ta.availableParameters():
+  hpd = ta.hpd(p, cred=0.95)
+  print("Parameter %5s, mean = % g, median = % g, std = % g, 95%% HPD = % g - % g" \
+        % (p, ta.mean(p), ta.median(p), ta.std(p), hpd[0], hpd[1]))
+
+#%%
+plt.figure()
+plt.hist(db.trace("i", 0)[:])
+plt.show()
+
+#%%
+plt.figure()
+ta.plotTrace("i")
+ta.show()
+
+plt.figure()
+plt.hist(db.trace("a", 0)[:])
+plt.show()
+
+plt.figure()
+ta.plotTrace("a")
+ta.show()
+
+plt.figure()
+plt.hist(db.trace("p", 0)[:])
+plt.show()
+
+plt.figure()
+ta.plotTrace("p")
+ta.show()
+
+#%%
+
+ta.correlationTable(coeff = "spearman")
+ta.correlationTable(coeff = "pearson")
+
+#%%
+
+
+

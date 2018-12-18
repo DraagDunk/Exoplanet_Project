@@ -126,7 +126,7 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, print_fig=False, save_f
 # fluxes:       Array of arrays of flux
 # intervals:    List of half-width of the time interval each point is calculated from in median filter
 # cutoff:       Lower flux limit for inclusion of data
-def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,TICs,print_fig=False,save_fig=False):
+def normer_fluxes(times,fluxes,intervals,TICs,cutoff = 0.98,print_fig=False,save_fig=False):
     # Calculate median filter from all points within twice the "intervals"    
     med_fluxes = []
     for i in range(len(fluxes)):
@@ -161,21 +161,21 @@ def normer_fluxes(times,fluxes,intervals,cutoff = 0.98,TICs,print_fig=False,save
             plt.plot(times[i], med_fluxes[i], 'r-')
             plt.xlabel('Time [days]')
             plt.ylabel('Flux')
-            plt.axis(xmin=min(times[i]),
-                     xmax=max(times[i]),
-                     ymin=np.median(fluxes[i])-300,
-                     ymax=np.median(fluxes[i])+300
-                     )
+           # plt.axis(xmin=min(times[i]),
+            #         xmax=max(times[i]),
+             #        ymin=np.median(fluxes[i])-300,
+              #       ymax=np.median(fluxes[i])+300
+               #      )
             # Normalized data
             plt.subplot(2,1,2)
             plt.plot(norm_times[i],norm_fluxes[i],'k,')
             plt.xlabel('Time [days]')
             plt.ylabel('Normalized Flux')
-            plt.axis(xmin=min(norm_times[i]),
-                     xmax=max(norm_times[i]),
-                     ymin=0.98,
-                     ymax=1.02
-                     )            
+          #  plt.axis(xmin=min(norm_times[i]),
+           #          xmax=max(norm_times[i]),
+            #         ymin=0.98,
+             #        ymax=1.02
+              #       )            
             plt.tight_layout()
             plt.show()
             if save_fig==True:

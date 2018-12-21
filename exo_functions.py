@@ -55,12 +55,12 @@ def import_tess_fits(path,print_fig=False):
 # times:    Array of arrays of time 
 # fluxes:   Array of arrays of flux
 # n_sigmas: List of number of standard deviations that should be included in data
-def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, print_fig=False, save_fig=False):
+def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=3, print_fig=False, save_fig=False):
     med_fluxes = []
     for i in range(len(fluxes)):
         med_flux = []
-        for j in range(len(fluxes[i])-2):
-            med_flux.append(np.median(fluxes[i][j:j+3]))
+        for j in range(len(fluxes[i])-(width-1)):
+            med_flux.append(np.median(fluxes[i][j:j+width]))
         med_flux = np.array(med_flux)
         
         med_fluxes.append(med_flux)
@@ -73,8 +73,8 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, print_fig=False, save_f
     
     # Remove data further from median than n_sigmas specifies
     for i in range(len(med_fluxes)):
-        fluxes[i] = fluxes[i][1:-1]
-        times[i] = times[i][1:-1]  
+        fluxes[i] = fluxes[i][int((width-1)/2):-int((width-1)/2)]
+        times[i] = times[i][int((width-1)/2):-int((width-1)/2)]  
         norm_flux = fluxes[i]/med_fluxes[i]
         sigma = np.std(norm_flux)
         fluxes[i] = fluxes[i][np.where(np.logical_and(norm_flux-1 < n_sigmas[i]*sigma, 
@@ -90,14 +90,14 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, print_fig=False, save_f
             ax1 = plt.subplot(3,1,1)
             ax1.set_xticklabels([])
             plt.plot(old_times[i], old_fluxes[i], 'k,')
-            plt.plot(old_times[i][1:-1], med_fluxes[i], 'r-')
+            plt.plot(old_times[i][int((width-1)/2):-int((width-1)/2)], med_fluxes[i], 'r-')
             plt.ylabel('Flux [ADU]')
             plt.xlim(old_times[i][0], old_times[i][-1])
             plt.ylim(np.median(old_fluxes[i])-300, np.median(old_fluxes[i])+300)
             # Normalized data and data cutoff boundaries
             ax2 = plt.subplot(3,1,2)
             ax2.set_xticklabels([])            
-            plt.plot(old_times[i][1:-1], norm_flux, 'k,')
+            plt.plot(old_times[i][int((width-1)/2):-int((width-1)/2)], norm_flux, 'k,')
             plt.plot([times[i][0], times[i][-1]], np.array([n_sigmas[i]*sigma, n_sigmas[i]*sigma])+1, 'r--')            
             plt.plot([times[i][0], times[i][-1]], np.array([-n_sigmas[i]*sigma, -n_sigmas[i]*sigma])+1, 'r--')
             plt.ylabel('Normalized flux')
@@ -271,20 +271,33 @@ def correlate_tess(even_fluxes, time_steps, TICs, print_fig=False, save_fig=Fals
 
 # Define gaussian function
 def gaussian(x, a, b, c):
-    return a * np.exp( - (x - b)**2 / (2*c**2) )
+    return a * np.exp( - (x - b)**2 / (2*c**2) ) + 1
+
+# Define linear function
+def linear(x, a):
+    return a * x
 
 # correlation_x:    Array of arrays of steps taken in correlation
 # correlation_y:    Array of arrays of correlation spectra
 # thresholds:       List of vertical distance boundaries from peak to noise
-def find_peaks(correlation_x, correlation_y, thresholds, TICs, print_fig=False, save_fig=False):
+def find_peaks(correlation_x, correlation_y, thresholds, alt_peaks, TICs, print_fig=False, save_fig=False):
+    
+    #Remove last 2000 points of data
+    correlation_x = correlation_x[0:-2000]
+    correlation_y = correlation_y[:,0:-2000]
+    
     peaks = []    
     # Find maxima that are farther from noise than the thresholds specify   
     for i in range(len(correlation_y[:,0])):
         peaks_temp = []        
         for j in range(len(correlation_y[i])-2):
             if correlation_y[i,j] <= correlation_y[i,j+1] >= correlation_y[i,j+2]:
-                if correlation_y[i,j+1]-correlation_y[i,j-199] >= thresholds[i] and correlation_y[i,j+1]-correlation_y[i,j+201] >= thresholds[i]:
-                    peaks_temp.append(j+1)
+                if j+201 < len(correlation_y[i])-1:
+                    if correlation_y[i,j+1]-correlation_y[i,j-199] >= thresholds[i] and correlation_y[i,j+1]-correlation_y[i,j+201] >= thresholds[i]:
+                        peaks_temp.append(j+1)
+                else:
+                    if correlation_y[i,j+1]-correlation_y[i,j-199] >= thresholds[i]:
+                        peaks_temp.append(j+1)
         peaks.append(np.array(peaks_temp))
     peaks = np.array(peaks)
 
@@ -302,45 +315,68 @@ def find_peaks(correlation_x, correlation_y, thresholds, TICs, print_fig=False, 
                             delete_index.append(i+1)
                 delete_index = np.array(delete_index)
                 peaks[h] = np.delete(peaks[h], delete_index)
+
+    for i in range(len(peaks)):
+        if len(peaks[i]) == 0:
+            peaks[i] = alt_peaks[i]
                 
     # Handy print of lists of peaks
     print('=========Array of found peaks:=========')
     print(peaks)
     print('=======================================')
-            
-    popts = []
-    centroids = []
+
     # Fit gaussian functions to left-most peak (Redo to fit to all peaks and find period from all)
+    period= []
     for i in range(len(peaks)):
+        popts = []
+        centroids = []
         if len(peaks[i]) > 0:
-            popt, pcov = curve_fit(gaussian, correlation_x, correlation_y[i], 
-                                   bounds = ([correlation_y[i][peaks[i][-1]]-0.01, peaks[i][-1]-20, 0],
-                                             [correlation_y[i][peaks[i][-1]]+0.01, peaks[i][-1]+20, 50]))
-            popts.append(popt)
-            centroids.append(popt[1]/len(peaks[i]))
-        else:
-            popts.append(42)
-            centroids.append(-1)
-    
-    # centroids aren't really centroids, but periods.            
-    centroids = np.array(centroids)
-    
-    # Plot correlation spectra with gaussians and peaks
-    if print_fig == True:
-        for i in range(len(correlation_y[:,0])):
-            if len(peaks[i]) > 0:
+            for j in range(len(peaks[i])):
+                popt, pcov = curve_fit(gaussian, correlation_x, correlation_y[i], 
+                                       bounds = ([correlation_y[i][peaks[i][j]]-1.1, peaks[i][j]-40, 0],
+                                                 [correlation_y[i][peaks[i][j]]-0.9, peaks[i][j]+40, 50]))
+                popts.append(popt)
+                centroids.append(popt[1])
+            centroids = np.array(centroids)
+            
+            # Plot correlation spectra with gaussians and peaks
+            if print_fig == True:
                 plt.figure()
                 plt.plot(correlation_x, correlation_y[i], 'b-')
                 plt.plot(correlation_x[peaks[i]], correlation_y[i,peaks[i]], 'r*')
-                plt.plot(correlation_x, gaussian(correlation_x, *popts[i]), 'k--')
+                for j in range(len(centroids)):
+                    plt.plot(correlation_x, gaussian(correlation_x, *popts[j]), 'k--')
                 plt.xlabel('Points')
                 plt.ylabel('Correlation function')
                 plt.tight_layout()
                 plt.show()
                 if save_fig == True:
                     plt.savefig('figures/' + timestamp + '_peaks_TIC' + TICs[i] + '.pdf')
-        
-    return centroids
+            
+            lin_popt, lin_pcov = curve_fit(linear, np.linspace(1,len(centroids),len(centroids)), centroids, bounds=([centroids[-1]-centroids[-2]-0.5],
+                                                                                             [centroids[-1]-centroids[-2]+0.5]))
+            print(lin_popt)
+            period.append(lin_popt)
+            
+            # Plot linear function finding period
+            if print_fig == True:
+                plt.figure()
+                plt.plot(np.linspace(1,len(centroids),len(centroids)), centroids, 'k*')
+                plt.plot(np.array([0, len(centroids)]), linear(np.array([0, len(centroids)]), *lin_popt), 'r--')
+                plt.xlabel('Peak index')
+                plt.ylabel('Time [days]')
+                plt.tight_layout()
+                plt.show()
+                if save_fig == True:
+                    plt.savefig('figures/' + timestamp + '_linear_fit_TIC' + TICs[i] + '.pdf')
+            
+        else:
+            period.append(-1)
+    
+    # centroids aren't really centroids, but periods.            
+    period = np.array(period)
+
+    return period
     
 #%% Script that can bin and phasefold transit light curves and return binned data
 

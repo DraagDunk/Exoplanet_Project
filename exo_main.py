@@ -47,7 +47,8 @@ intervals = [1.42,0.35,0.7,0.2]
 
 n_sigmas = [0.35, 0.3, 0.25, 0.5]
 
-times, fluxes = ex.fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, print_fig=False, save_fig=False)
+# width SKAL være ulige!!!
+times, fluxes = ex.fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=11, print_fig=False, save_fig=False)
 #%%
 norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,TICs,cutoff = 0.985,print_fig=False, save_fig=False)
 
@@ -70,17 +71,25 @@ for i in range(4):
     
 correlations_x = np.array(correlations_x)
 
-norm_corr_x, norm_corr_y = ex.normer_fluxes(correlations_x, correlation_y, corr_intervals,TICs,cutoff = -1,print_fig = True, save_fig = False)
+norm_corr_x, norm_corr_y = ex.normer_fluxes(correlations_x, correlation_y, corr_intervals,TICs,cutoff = -1,print_fig = False, save_fig = False)
 
-thresholds = np.array([0.003, 0.003, 0.003, 0.003])
+thresholds = np.array([3, 1.1, 2.5, 2])
 
-centroids = ex.find_peaks(correlation_x, norm_corr_y, thresholds, TICs, print_fig=True, save_fig=False)
+alt_peaks = [np.array([]), 
+             np.array([(np.abs(norm_corr_x[1]-1673)).argmin(), (np.abs(norm_corr_x[1]-3341)).argmin(), (np.abs(norm_corr_x[1]-5008)).argmin(), (np.abs(norm_corr_x[1]-6676)).argmin()]), 
+             np.array([]), 
+             np.array([])
+             ]
 
-periods = centroids*time_steps
+periods = ex.find_peaks(correlation_x, norm_corr_y, thresholds, alt_peaks, TICs, print_fig=True, save_fig=True)
+
+periods = periods.T*time_steps
+periods = periods.reshape(len(periods[0]))
+
 print('Periods:' + str(periods))
 
 binned_times, binned_fluxes = ex.bin_fluxes_and_times_tess(norm_times, norm_fluxes, periods, [0, 0, 1, 0], TICs, 
-                                                           print_fig=False, save_fig=False)
+                                                           print_fig=True, save_fig=True)
 
 
 #==============================================================================

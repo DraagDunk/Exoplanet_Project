@@ -19,7 +19,7 @@ timestamp = str(now.year) + '-' + str(now.month) + '-' + str(now.day) + '_' + st
 #%% Function that imports data from .fits file, and returns time and SAP flux
 
 # path: name of .fits file
-def import_tess_fits(path,print_fig=False):
+def import_tess_fits(path, TICs,print_fig=False,save_fig=False):
     hdulist = fits.open('data/'+ path)
     hdu = hdulist[1]
     
@@ -47,6 +47,10 @@ def import_tess_fits(path,print_fig=False):
         plt.title(path)
         plt.xlabel('time [days]')
         plt.ylabel('flux')
+        plt.tight_layout()
+        if save_fig == True:
+            plt.savefig('figures/' + timestamp + '_rawdata_TIC' + TICs + '.pdf')
+        plt.show()
     
     return time, sap_flux
     

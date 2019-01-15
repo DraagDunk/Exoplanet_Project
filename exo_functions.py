@@ -163,8 +163,11 @@ def normer_fluxes(times,fluxes,intervals,TICs,curve,cutoff = 0.98,print_fig=Fals
         for i in range(len(norm_fluxes)):
             plt.figure()
             # Data and median filter
-            ax1 = plt.subplot(2,1,1)
-            ax1.set_title('Finely Filtered Data and Median Filter')
+            ax1 = plt.subplot(2,1,1)            
+            if curve == 'lightcurve':
+                ax1.set_title('Finely Filtered Data and Median Filter')
+            elif curve == 'correlation':
+                ax1.set_title('Corr. Spectrum and Median Filter')
             plt.plot(times[i], fluxes[i], 'b,')
             plt.plot(times[i], med_fluxes[i], 'r-')
             plt.xlabel('Time [days]')
@@ -176,7 +179,10 @@ def normer_fluxes(times,fluxes,intervals,TICs,curve,cutoff = 0.98,print_fig=Fals
                #      )
             # Normalized data
             ax2 = plt.subplot(2,1,2)
-            ax2.set_title('Double Filtered Data')
+            if curve == 'lightcurve':
+                ax2.set_title('Double Filtered Data')
+            elif curve == 'correlation':
+                ax2.set_title('Norm. Correlation Spectrum')
             plt.plot(norm_times[i],norm_fluxes[i],'k,')
             plt.xlabel('Time [days]')
             plt.ylabel('Normalized Flux')
@@ -424,6 +430,7 @@ def bin_fluxes_and_times_tess(norm_times,norm_fluxes,periods,offsets,TICs,print_
         # Plot normalized data and binned data
         if print_fig == True and periods[j] > 0:
             plt.figure()
+            plt.title('Folded Light Curve')
             plt.plot(phase_time,norm_fluxes[j],',r')
             plt.plot(binned_time,binned_flux,'.k')
             plt.ylabel('Normalized median Flux')

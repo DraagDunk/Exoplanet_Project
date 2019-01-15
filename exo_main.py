@@ -18,11 +18,6 @@ plt.close('all')
 
 #%% TODO
 
-# Normer korrelationsspektrum
-
-# EKSTRA
-# Find mere nøjagtig periode (Lineær fit til korrelationspeaks)
-
 paths = np.genfromtxt('data/fits.txt', dtype=str)
 
 TICs = []
@@ -36,7 +31,7 @@ times =     []
 fluxes =    [] 
                  
 for i in range(len(paths)):
-    time, flux = ex.import_tess_fits(paths[i], TICs[i], print_fig=True, save_fig=False)
+    time, flux = ex.import_tess_fits(paths[i], TICs[i], print_fig=True, save_fig=True)
     times.append(time)
     fluxes.append(flux)
 
@@ -48,9 +43,9 @@ intervals = [1.42,0.35,0.55,0.2]
 n_sigmas = [0.35, 0.3, 0.25, 0.5]
 
 # width SKAL være ulige!!!
-times, fluxes = ex.fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=11, print_fig=True, save_fig=False)
+times, fluxes = ex.fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=11, print_fig=True, save_fig=True)
 
-norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,TICs,'lightcurve',cutoff = 0.985,print_fig=True, save_fig=False)
+norm_times, norm_fluxes = ex.normer_fluxes(times,fluxes,intervals,TICs,'lightcurve',cutoff = 0.985,print_fig=True, save_fig=True)
 #%%
 bad_data = np.array([[1338.5, 1339.7],
                      [1347.1, 1349.4],
@@ -58,11 +53,11 @@ bad_data = np.array([[1338.5, 1339.7],
                      
 norm_fluxes = ex.remove_bad_data(norm_times, norm_fluxes, bad_data)
 
-even_times, even_fluxes = ex.interpolate_tess(norm_times, norm_fluxes, TICs, print_fig=False, save_fig=False)
+even_times, even_fluxes = ex.interpolate_tess(norm_times, norm_fluxes, TICs, print_fig=True, save_fig=True)
 
 time_steps = even_times[:,1] - even_times[:,0]
 
-correlation_x, correlation_y = ex.correlate_tess(even_fluxes, time_steps, TICs, print_fig=False, save_fig=False)
+correlation_x, correlation_y = ex.correlate_tess(even_fluxes, time_steps, TICs, print_fig=True, save_fig=True)
 
 corr_intervals = 500*np.ones(4)
 correlations_x = []
@@ -71,7 +66,7 @@ for i in range(4):
     
 correlations_x = np.array(correlations_x)
 
-norm_corr_x, norm_corr_y = ex.normer_fluxes(correlations_x, correlation_y, corr_intervals,TICs,'correlation',cutoff = -1,print_fig = False, save_fig = False)
+norm_corr_x, norm_corr_y = ex.normer_fluxes(correlations_x, correlation_y, corr_intervals,TICs,'correlation',cutoff = -1,print_fig = True, save_fig = True)
 
 thresholds = np.array([3, 1.1, 2.5, 2])
 
@@ -81,7 +76,7 @@ alt_peaks = [np.array([]),
              np.array([])
              ]
 
-periods = ex.find_peaks(correlation_x, norm_corr_y, thresholds, alt_peaks, TICs, print_fig=False, save_fig=False)
+periods = ex.find_peaks(correlation_x, norm_corr_y, thresholds, alt_peaks, TICs, print_fig=True, save_fig=True)
 
 periods = periods.T*time_steps
 periods = periods.reshape(len(periods[0]))
@@ -89,7 +84,7 @@ periods = periods.reshape(len(periods[0]))
 print('Periods:' + str(periods))
 
 binned_times, binned_fluxes = ex.bin_fluxes_and_times_tess(norm_times, norm_fluxes, periods, [0, 0, 1, 0], TICs, 
-                                                           print_fig=False, save_fig=False)
+                                                           print_fig=True, save_fig=True)
 
 
 #==============================================================================

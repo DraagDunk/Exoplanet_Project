@@ -44,9 +44,9 @@ def import_tess_fits(path, TICs,print_fig=False,save_fig=False):
     if print_fig==True:    
         plt.figure()
         plt.plot(time, sap_flux, ',')
-        plt.title(path)
-        plt.xlabel('time [days]')
-        plt.ylabel('flux')
+        plt.title('Raw Imported Data for  ' + TICs)
+        plt.xlabel('Time [days]')
+        plt.ylabel('Flux')
         plt.tight_layout()
         if save_fig == True:
             plt.savefig('figures/' + timestamp + '_rawdata_TIC' + TICs + '.pdf')
@@ -93,6 +93,7 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=3, print_fig=Fals
             # Old data and median filter
             ax1 = plt.subplot(3,1,1)
             ax1.set_xticklabels([])
+            ax1.set_title('Raw Data and Fine Mesh Filter')
             plt.plot(old_times[i], old_fluxes[i], 'k,')
             plt.plot(old_times[i][int((width-1)/2):-int((width-1)/2)], med_fluxes[i], 'r-')
             plt.ylabel('Flux [ADU]')
@@ -100,7 +101,8 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=3, print_fig=Fals
             plt.ylim(np.median(old_fluxes[i])-300, np.median(old_fluxes[i])+300)
             # Normalized data and data cutoff boundaries
             ax2 = plt.subplot(3,1,2)
-            ax2.set_xticklabels([])            
+            ax2.set_xticklabels([])  
+            ax2.set_title('Normalized data and Cutoff Boundaries')
             plt.plot(old_times[i][int((width-1)/2):-int((width-1)/2)], norm_flux, 'k,')
             plt.plot([times[i][0], times[i][-1]], np.array([n_sigmas[i]*sigma, n_sigmas[i]*sigma])+1, 'r--')            
             plt.plot([times[i][0], times[i][-1]], np.array([-n_sigmas[i]*sigma, -n_sigmas[i]*sigma])+1, 'r--')
@@ -108,7 +110,8 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=3, print_fig=Fals
             plt.xlim(old_times[i][0], old_times[i][-1])
             plt.ylim(1-0.7*sigma, 1+0.7*sigma)
             # Comparison between old and new data
-            plt.subplot(3,1,3)
+            ax3 = plt.subplot(3,1,3)
+            ax3.set_title('Filtered and Unfiltered Data')
             plt.plot(old_times[i], old_fluxes[i], 'k,')
             plt.plot(times[i], fluxes[i], 'r,')
             plt.xlabel('Time [days]')
@@ -130,7 +133,7 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=3, print_fig=Fals
 # fluxes:       Array of arrays of flux
 # intervals:    List of half-width of the time interval each point is calculated from in median filter
 # cutoff:       Lower flux limit for inclusion of data
-def normer_fluxes(times,fluxes,intervals,TICs,cutoff = 0.98,print_fig=False,save_fig=False):
+def normer_fluxes(times,fluxes,intervals,TICs,curve,cutoff = 0.98,print_fig=False,save_fig=False):
     # Calculate median filter from all points within twice the "intervals"    
     med_fluxes = []
     for i in range(len(fluxes)):
@@ -160,7 +163,8 @@ def normer_fluxes(times,fluxes,intervals,TICs,cutoff = 0.98,print_fig=False,save
         for i in range(len(norm_fluxes)):
             plt.figure()
             # Data and median filter
-            plt.subplot(2,1,1)
+            ax1 = plt.subplot(2,1,1)
+            ax1.set_title('Finely Filtered Data and Median Filter')
             plt.plot(times[i], fluxes[i], 'b,')
             plt.plot(times[i], med_fluxes[i], 'r-')
             plt.xlabel('Time [days]')
@@ -171,7 +175,8 @@ def normer_fluxes(times,fluxes,intervals,TICs,cutoff = 0.98,print_fig=False,save
               #       ymax=np.median(fluxes[i])+300
                #      )
             # Normalized data
-            plt.subplot(2,1,2)
+            ax2 = plt.subplot(2,1,2)
+            ax2.set_title('Double Filtered Data')
             plt.plot(norm_times[i],norm_fluxes[i],'k,')
             plt.xlabel('Time [days]')
             plt.ylabel('Normalized Flux')
@@ -183,7 +188,7 @@ def normer_fluxes(times,fluxes,intervals,TICs,cutoff = 0.98,print_fig=False,save
             plt.tight_layout()
             plt.show()
             if save_fig==True:
-                plt.savefig('figures/' + timestamp + '_normcurve_TIC' + TICs[i] + '.pdf')
+                plt.savefig('figures/' + timestamp + '_normcurve_'+curve+'_TIC' + TICs[i] + '.pdf')
 
     return norm_times, norm_fluxes
     
@@ -225,6 +230,7 @@ def interpolate_tess(norm_times, norm_fluxes, TICs, print_fig=False, save_fig=Fa
     if print_fig==True:
         for i in range(len(norm_times)):        
             plt.figure()
+            plt.title('Data and Interpolation')
             plt.plot(even_times[i], even_fluxes[i], 'r,')
             plt.plot(norm_times[i], norm_fluxes[i], 'b,')
             plt.show()
@@ -262,6 +268,7 @@ def correlate_tess(even_fluxes, time_steps, TICs, print_fig=False, save_fig=Fals
         for i in range(len(time_steps)):
             plt.figure()
             plt.plot(correlation_x*time_steps[i], correlation_spectra[i], 'b-')
+            plt.title('Correlation Spectrum')
             plt.xlabel('Period [days]')
             plt.ylabel('Correlation function')
             plt.tight_layout()
@@ -346,6 +353,7 @@ def find_peaks(correlation_x, correlation_y, thresholds, alt_peaks, TICs, print_
             # Plot correlation spectra with gaussians and peaks
             if print_fig == True:
                 plt.figure()
+                plt.title('Norm. Corr. Spectrum and fits to Peaks')
                 plt.plot(correlation_x, correlation_y[i], 'b-')
                 plt.plot(correlation_x[peaks[i]], correlation_y[i,peaks[i]], 'r*')
                 for j in range(len(centroids)):
@@ -365,6 +373,7 @@ def find_peaks(correlation_x, correlation_y, thresholds, alt_peaks, TICs, print_
             # Plot linear function finding period
             if print_fig == True:
                 plt.figure()
+                plt.title('Linear Fit to Peaks from Corr. Spectrum')
                 plt.plot(np.linspace(1,len(centroids),len(centroids)), centroids, 'k*')
                 plt.plot(np.array([0, len(centroids)]), linear(np.array([0, len(centroids)]), *lin_popt), 'r--')
                 plt.xlabel('Peak index')

@@ -1,0 +1,12 @@
+Indlæs data
+
+Groft median filter, uden fine mesh
+Her er der lidt problem med at tranisitterne kommer delvist med i filtreringen, særligt for den første
+
+Interpolation:
+Vi laver en lineær interpolation fordi de andre typer simpelthen tager for lang tid, hvilket giver mening, da vi har omkring 20.000 punkter.
+Men det er heller ikke noget problem, de burde virke fint.
+
+Ved de tomme områder, som inkluderer det område hvor vi har fjernet den dårlige data som der var i to af sættene, kommer der skrå streger. Disse vil komme til at give et bidrag når vi laver korrelationsspektrum. 
+
+

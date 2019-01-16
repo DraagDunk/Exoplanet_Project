@@ -25,15 +25,20 @@ def import_tess_fits(path, TICs,print_fig=False,save_fig=False):
     
     hdu_data = hdu.data
     
+    if path[18] == "s":
+        flux_i = 3
+    else:
+        flux_i = 2
+    
     time = []
     sap_flux = []
     pdc_flux = []
     
     # Remove NaN from data
     for i in range(len(hdu_data)):
-        if np.isnan(hdu_data[i][3])==False:
+        if np.isnan(hdu_data[i][flux_i])==False:
             time.append(hdu_data[i][0])
-            sap_flux.append(hdu_data[i][3])
+            sap_flux.append(hdu_data[i][flux_i])
             pdc_flux.append(hdu_data[i][7])
         
     time =      np.array(time)
@@ -108,7 +113,7 @@ def fine_mesh_filter_tess(times, fluxes, n_sigmas, TICs, width=3, print_fig=Fals
             plt.plot([times[i][0], times[i][-1]], np.array([-n_sigmas[i]*sigma, -n_sigmas[i]*sigma])+1, 'r--')
             plt.ylabel('Normalized flux')
             plt.xlim(old_times[i][0], old_times[i][-1])
-            plt.ylim(1-0.7*sigma, 1+0.7*sigma)
+            plt.ylim(1-1.4*sigma*n_sigmas[i], 1+1.4*sigma*n_sigmas[i])
             # Comparison between old and new data
             ax3 = plt.subplot(3,1,3)
             ax3.set_title('Filtered and Unfiltered Data')
@@ -300,8 +305,8 @@ def linear(x, a):
 def find_peaks(correlation_x, correlation_y, thresholds, alt_peaks, TICs, print_fig=False, save_fig=False):
     
     #Remove last 2000 points of data
-    correlation_x = correlation_x[0:-2000]
-    correlation_y = correlation_y[:,0:-2000]
+    correlation_x = correlation_x[0:-2500]
+    correlation_y = correlation_y[:,0:-2500]
     
     peaks = []    
     # Find maxima that are farther from noise than the thresholds specify   
@@ -309,12 +314,13 @@ def find_peaks(correlation_x, correlation_y, thresholds, alt_peaks, TICs, print_
         peaks_temp = []        
         for j in range(len(correlation_y[i])-2):
             if correlation_y[i,j] <= correlation_y[i,j+1] >= correlation_y[i,j+2]:
-                if j+201 < len(correlation_y[i])-1:
-                    if correlation_y[i,j+1]-correlation_y[i,j-199] >= thresholds[i] and correlation_y[i,j+1]-correlation_y[i,j+201] >= thresholds[i]:
-                        peaks_temp.append(j+1)
-                else:
-                    if correlation_y[i,j+1]-correlation_y[i,j-199] >= thresholds[i]:
-                        peaks_temp.append(j+1)
+                if correlation_x[j] > 100:
+                    if j+201 < len(correlation_y[i])-1:
+                        if correlation_y[i,j+1]-correlation_y[i,j-199] >= thresholds[i] and correlation_y[i,j+1]-correlation_y[i,j+201] >= thresholds[i]:
+                            peaks_temp.append(j+1)
+                    else:
+                        if correlation_y[i,j+1]-correlation_y[i,j-199] >= thresholds[i]:
+                            peaks_temp.append(j+1)
         peaks.append(np.array(peaks_temp))
     peaks = np.array(peaks)
 

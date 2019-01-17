@@ -1,7 +1,11 @@
 Indlæs data
 
 Groft median filter, uden fine mesh
-Her er der lidt problem med at tranisitterne kommer delvist med i filtreringen, særligt for den første
+Her er der lidt problem med at tranisitterne kommer delvist med i filtreringen, særligt for den første. Vi løser det ved at sætte intervallet op til omkring halvdelen af perioden, bedømt visuelt.
+Vi havde i starten sat til omkring hele perioden, hvilket gav et dyk i filteret midt i mellem to transitter.
+
+Hvordan virker moving median filter?
+Vi tager et antal punkgter der svarer til bredden af vores interval. Det midterste punkt i intervallet sættes til medianen af værdierne i intervallet. Så flyttes intervallet et punkt, og processen gentages.
 
 Interpolation:
 Vi laver en lineær interpolation fordi de andre typer simpelthen tager for lang tid, hvilket giver mening, da vi har omkring 20.000 punkter.
@@ -9,4 +13,16 @@ Men det er heller ikke noget problem, de burde virke fint.
 
 Ved de tomme områder, som inkluderer det område hvor vi har fjernet den dårlige data som der var i to af sættene, kommer der skrå streger. Disse vil komme til at give et bidrag når vi laver korrelationsspektrum. 
 
+Korrelation:
+Vi laver et korrelations spektrum for hvert data-sæt ved at bruge de interpolerede data. Grunden til at vi skal bruge det interpolerede data, er at korrelationen kun kommer til at virke hvis vores data har puntker der har et fast tidsinterval. 
+Peaks i korr. spektret svarer til perioden. Lige nu er peaksene givet som funktion af punkter. Dette skulle egentlig være tid, men vi glemte på det her tidspunkt at gange vores tidsskridt på, som er den tid som der er i mellem vores evenly spaced data punkter fra interpolationen. 
 
+Vi skal nu finde perioden ud fra korrelationsspektret, og det gør vi ved at se på de peaks hvor der er den største korrelation. 
+Vi kunne egentlig fitte til et hvilket som helst af peaksene, men vi tager det sidste, fordi så kan vi dividere med det nummer peak det er, og derved minimere usikkerhederne fra fittet. 
+
+Når vi nu har perioden kan vi nu fasefolde vores lyskurve, og får så den bedste mulige transit-kurve. For at få en pænere kurve binner vi dataen. Dette gør vi ved at tage et antal punkter der svarer til antallet af foldninger, og så lave for disse punkter et enkelt punkt der har værdien af medianen af punkterne. Så der er ikke tale om et moving median filter. 
+
+
+Hvad kan vi gøre bedre:
+Vi kan prøve at lave et fin-masket median filter der vil fjerne outliers. Der virker på samme måde som det tidligere moving median filter, men her er det brugte interval bare meget mindre. I den første figur er der faktisk kun taget tre punkter pr. interval. 
+Vi dividerer så de faktiske punkter med værdierne fra median-filteret. Ved visuel inspektion vælger vi den afstand fra disse punkter som data skal sorteres væk hvis de ligger længere væk. 

@@ -8,11 +8,9 @@ Created on Thu Nov  8 11:31:16 2018
 import numpy as np
 import matplotlib.pyplot as plt
 import exo_functions as ex
-#==============================================================================
-# import pymc
-# from PyAstronomy.modelSuite import forTrans as ft
-# from PyAstronomy import funcFit as fuf
-#==============================================================================
+import pymc
+from PyAstronomy.modelSuite import forTrans as ft
+from PyAstronomy import funcFit as fuf
 
 plt.close('all')
 
@@ -106,11 +104,11 @@ for i in range(len(norm_times)):
     norm_fluxes[i] = np.delete(norm_fluxes[i], bad_index)
 
 binned_times, binned_fluxes = ex.bin_fluxes_and_times_tess(norm_times, norm_fluxes, periods, [0, 0, 0, 0, 1, 0], TICs, 
-                                                           print_fig=True, save_fig=True)
+                                                           print_fig=False, save_fig=False)
+
 
 
 #==============================================================================
-# 
 # #%%
 # ma = ft.MandelAgolLC(orbit="keplerian", ld="quad")
 # time = binned_times[0]
@@ -161,50 +159,70 @@ binned_times, binned_fluxes = ex.bin_fluxes_and_times_tess(norm_times, norm_flux
 # plt.xlabel('Time % period [days]')
 # plt.ylabel('Normalized flux')
 # plt.show()
-# 
-# db = pymc.database.pickle.load('mcmc_test.tmp')
-# ta = fuf.TraceAnalysis("mcmc_test.tmp")
-# 
-# print("Available parameters: ", ta.availableParameters())
-# 
-# for p in ta.availableParameters():
-#   hpd = ta.hpd(p, cred=0.95)
-#   print("Parameter %5s, mean = % g, median = % g, std = % g, 95%% HPD = % g - % g" \
-#         % (p, ta.mean(p), ta.median(p), ta.std(p), hpd[0], hpd[1]))
-# 
-# #%%
-# plt.figure()
-# plt.hist(db.trace("i", 0)[:])
-# plt.show()
-# 
-# #%%
-# plt.figure()
-# ta.plotTrace("i")
-# ta.show()
-# 
-# plt.figure()
-# plt.hist(db.trace("a", 0)[:])
-# plt.show()
-# 
-# plt.figure()
-# ta.plotTrace("a")
-# ta.show()
-# 
-# plt.figure()
-# plt.hist(db.trace("p", 0)[:])
-# plt.show()
-# 
-# plt.figure()
-# ta.plotTrace("p")
-# ta.show()
-# 
-# #%%
-# 
-# ta.correlationTable(coeff = "spearman")
-# ta.correlationTable(coeff = "pearson")
-# 
-# #%%
-# 
-# 
-# 
 #==============================================================================
+#%%
+db = pymc.database.pickle.load('mcmc_test.tmp')
+ta = fuf.TraceAnalysis("mcmc_test.tmp")
+
+print("Available parameters: ", ta.availableParameters())
+
+for p in ta.availableParameters():
+  hpd = ta.hpd(p, cred=0.95)
+  print("Parameter, w/o burn %5s, mean = % g, median = % g, std = % g, 95%% HPD = % g - % g" \
+        % (p, ta.mean(p), ta.median(p), ta.std(p), hpd[0], hpd[1]))
+
+
+plt.figure()
+plt.title('Histogram for a, without burn')
+ta.plotHist("a")
+ta.show()
+
+plt.figure()
+ta.plotTrace("a")
+ta.show()
+
+plt.figure()
+ta.plotHist("p")
+ta.show()
+
+plt.figure()
+plt.title('Trace for Radius Ratio')
+plt.xlabel('Iterations')
+plt.ylabel('Parameter Value')
+ta.plotTrace("p")
+ta.show()
+
+ta.setBurn(10000)
+print("Available parameters: ", ta.availableParameters())
+
+for p in ta.availableParameters():
+  hpd = ta.hpd(p, cred=0.95)
+  print("Parameter, with burn %5s, mean = % g, median = % g, std = % g, 95%% HPD = % g - % g" \
+        % (p, ta.mean(p), ta.median(p), ta.std(p), hpd[0], hpd[1]))
+
+
+plt.figure()
+ta.plotHist("a")
+ta.show()
+
+plt.figure()
+ta.plotTrace("a")
+ta.show()
+
+plt.figure()
+ta.plotHist("p")
+ta.show()
+
+plt.figure()
+ta.plotTrace("p")
+ta.show()
+
+#%%
+
+ta.correlationTable(coeff = "spearman")
+ta.correlationTable(coeff = "pearson")
+
+#%%
+
+
+

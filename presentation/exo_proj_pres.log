@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.22)  16 JAN 2019 13:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.29)  17 JAN 2019 16:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -727,23 +727,26 @@ Package: beamercolorthemewhale 2010/06/17  (rcs-revision d02a7cf4d8ae)
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/themes/color/beamercolorthemeor
 chid.sty
 Package: beamercolorthemeorchid 2010/06/17  (rcs-revision d02a7cf4d8ae)
-)) (./exo_proj_pres.aux)
+)) (/usr/share/texlive/texmf-dist/tex/latex/was/gensymb.sty
+Package: gensymb 2003/07/02 v1.0 (WaS)
+)
+(./exo_proj_pres.aux)
 \openout1 = `exo_proj_pres.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -809,7 +812,7 @@ e
 ))
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box54
-Package hyperref Info: Link coloring OFF on input line 12.
+Package hyperref Info: Link coloring OFF on input line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -819,66 +822,66 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count159
 )
-LaTeX Info: Redefining \ref on input line 12.
-LaTeX Info: Redefining \pageref on input line 12.
-LaTeX Info: Redefining \nameref on input line 12.
+LaTeX Info: Redefining \ref on input line 14.
+LaTeX Info: Redefining \pageref on input line 14.
+LaTeX Info: Redefining \nameref on input line 14.
 
 (./exo_proj_pres.out) (./exo_proj_pres.out)
 \@outlinefile=\write5
 \openout5 = `exo_proj_pres.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 12.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 14.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 12.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 14.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 12.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 12.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 12.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 12.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 14.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 12.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 12.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 12.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 14.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 12.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 12.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 12.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 14.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 12.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 12.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 14.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 12.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 14.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 12.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 12.
+(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 12.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 12.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 12.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 14.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 12.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 12.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 14.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 14.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
 (Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 1
-2.
+4.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/bx/it --> OT1/mathkerncmss/m/sl on input line 
-12.
+14.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 12.
+ut line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-bas
 ic-dictionary/translator-basic-dictionary-English.dict
@@ -904,192 +907,203 @@ Dictionary: translator-numbers-dictionary, Language: English
 orem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 12.
+LaTeX Info: Redefining \includegraphics on input line 14.
+LaTeX Info: Redefining \celsius on input line 14.
+Package gensymb Info: Faking symbols for \degree and \celsius on input line 14.
+
+
+
+Package gensymb Warning: Not defining \perthousand.
+
+LaTeX Info: Redefining \ohm on input line 14.
+Package gensymb Info: Using \Omega for \ohm on input line 14.
+
+Package gensymb Warning: Not defining \micro.
 
 (./exo_proj_pres.nav)
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
-(Font)              size <5> substituted on input line 16.
+(Font)              size <5> substituted on input line 18.
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<../figures/2019-1-15_16:2:14_rawdata_TIC38846515.pdf, id=48, 578.16pt x 433.62
+<../figures/2019-1-15_16:2:14_rawdata_TIC38846515.pdf, id=64, 578.16pt x 433.62
 pt>
 File: ../figures/2019-1-15_16:2:14_rawdata_TIC38846515.pdf Graphic file (type p
 df)
  <use ../figures/2019-1-15_16:2:14_rawdata_TIC38846515.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_rawdata_TIC38846515.pdf u
-sed on input line 26.
+sed on input line 28.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [2
 
  <../figures/2019-1-15_16:2:14_rawdata_TIC38846515.pdf>]
-<../figures/2018-11-9_14:25:51_norm_curve0.pdf, id=114, 578.16pt x 433.62pt>
+<../figures/2018-11-9_14:25:51_norm_curve0.pdf, id=131, 578.16pt x 433.62pt>
 File: ../figures/2018-11-9_14:25:51_norm_curve0.pdf Graphic file (type pdf)
 
 <use ../figures/2018-11-9_14:25:51_norm_curve0.pdf>
 Package pdftex.def Info: ../figures/2018-11-9_14:25:51_norm_curve0.pdf used on 
-input line 32.
+input line 34.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [3
 
  <../figures/2018-11-9_14:25:51_norm_curve0.pdf>]
-<../../med_filt_dem_fig/med_filt_0.pdf, id=176, 462.52798pt x 346.89601pt>
-File: ../../med_filt_dem_fig/med_filt_0.pdf Graphic file (type pdf)
+<../med_filt_dem_fig/med_filt_0.pdf, id=193, 462.52798pt x 346.89601pt>
+File: ../med_filt_dem_fig/med_filt_0.pdf Graphic file (type pdf)
 
-<use ../../med_filt_dem_fig/med_filt_0.pdf>
-Package pdftex.def Info: ../../med_filt_dem_fig/med_filt_0.pdf used on input li
-ne 38.
+<use ../med_filt_dem_fig/med_filt_0.pdf>
+Package pdftex.def Info: ../med_filt_dem_fig/med_filt_0.pdf used on input line 
+40.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [4
 
- <../../med_filt_dem_fig/med_filt_0.pdf>]
-<../../med_filt_dem_fig/med_filt_1.pdf, id=234, 462.52798pt x 346.89601pt>
-File: ../../med_filt_dem_fig/med_filt_1.pdf Graphic file (type pdf)
+ <../med_filt_dem_fig/med_filt_0.pdf>] <../med_filt_dem_fig/med_filt_1.pdf, id=
+251, 462.52798pt x 346.89601pt>
+File: ../med_filt_dem_fig/med_filt_1.pdf Graphic file (type pdf)
 
-<use ../../med_filt_dem_fig/med_filt_1.pdf>
-Package pdftex.def Info: ../../med_filt_dem_fig/med_filt_1.pdf used on input li
-ne 44.
+<use ../med_filt_dem_fig/med_filt_1.pdf>
+Package pdftex.def Info: ../med_filt_dem_fig/med_filt_1.pdf used on input line 
+46.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [5
 
- <../../med_filt_dem_fig/med_filt_1.pdf>]
-<../../med_filt_dem_fig/med_filt_2.pdf, id=291, 462.52798pt x 346.89601pt>
-File: ../../med_filt_dem_fig/med_filt_2.pdf Graphic file (type pdf)
+ <../med_filt_dem_fig/med_filt_1.pdf>] <../med_filt_dem_fig/med_filt_2.pdf, id=
+308, 462.52798pt x 346.89601pt>
+File: ../med_filt_dem_fig/med_filt_2.pdf Graphic file (type pdf)
 
-<use ../../med_filt_dem_fig/med_filt_2.pdf>
-Package pdftex.def Info: ../../med_filt_dem_fig/med_filt_2.pdf used on input li
-ne 50.
+<use ../med_filt_dem_fig/med_filt_2.pdf>
+Package pdftex.def Info: ../med_filt_dem_fig/med_filt_2.pdf used on input line 
+52.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [6
 
- <../../med_filt_dem_fig/med_filt_2.pdf>]
-<../../med_filt_dem_fig/med_filt_3.pdf, id=349, 462.52798pt x 346.89601pt>
-File: ../../med_filt_dem_fig/med_filt_3.pdf Graphic file (type pdf)
+ <../med_filt_dem_fig/med_filt_2.pdf>] <../med_filt_dem_fig/med_filt_3.pdf, id=
+366, 462.52798pt x 346.89601pt>
+File: ../med_filt_dem_fig/med_filt_3.pdf Graphic file (type pdf)
 
-<use ../../med_filt_dem_fig/med_filt_3.pdf>
-Package pdftex.def Info: ../../med_filt_dem_fig/med_filt_3.pdf used on input li
-ne 56.
+<use ../med_filt_dem_fig/med_filt_3.pdf>
+Package pdftex.def Info: ../med_filt_dem_fig/med_filt_3.pdf used on input line 
+58.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [7
 
- <../../med_filt_dem_fig/med_filt_3.pdf>]
-<../../med_filt_dem_fig/med_filt_4.pdf, id=409, 462.52798pt x 346.89601pt>
-File: ../../med_filt_dem_fig/med_filt_4.pdf Graphic file (type pdf)
+ <../med_filt_dem_fig/med_filt_3.pdf>] <../med_filt_dem_fig/med_filt_4.pdf, id=
+426, 462.52798pt x 346.89601pt>
+File: ../med_filt_dem_fig/med_filt_4.pdf Graphic file (type pdf)
 
-<use ../../med_filt_dem_fig/med_filt_4.pdf>
-Package pdftex.def Info: ../../med_filt_dem_fig/med_filt_4.pdf used on input li
-ne 62.
+<use ../med_filt_dem_fig/med_filt_4.pdf>
+Package pdftex.def Info: ../med_filt_dem_fig/med_filt_4.pdf used on input line 
+64.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [8
 
- <../../med_filt_dem_fig/med_filt_4.pdf>]
-<../../med_filt_dem_fig/med_filt_5.pdf, id=467, 462.52798pt x 346.89601pt>
-File: ../../med_filt_dem_fig/med_filt_5.pdf Graphic file (type pdf)
+ <../med_filt_dem_fig/med_filt_4.pdf>] <../med_filt_dem_fig/med_filt_5.pdf, id=
+484, 462.52798pt x 346.89601pt>
+File: ../med_filt_dem_fig/med_filt_5.pdf Graphic file (type pdf)
 
-<use ../../med_filt_dem_fig/med_filt_5.pdf>
-Package pdftex.def Info: ../../med_filt_dem_fig/med_filt_5.pdf used on input li
-ne 68.
+<use ../med_filt_dem_fig/med_filt_5.pdf>
+Package pdftex.def Info: ../med_filt_dem_fig/med_filt_5.pdf used on input line 
+70.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [9
 
- <../../med_filt_dem_fig/med_filt_5.pdf>]
-<../figures/2018-11-14_15:35:52_inter_curve0.pdf, id=525, 578.16pt x 433.62pt>
+ <../med_filt_dem_fig/med_filt_5.pdf>]
+<../figures/2018-11-14_15:35:52_inter_curve0.pdf, id=542, 578.16pt x 433.62pt>
 File: ../figures/2018-11-14_15:35:52_inter_curve0.pdf Graphic file (type pdf)
 
 <use ../figures/2018-11-14_15:35:52_inter_curve0.pdf>
 Package pdftex.def Info: ../figures/2018-11-14_15:35:52_inter_curve0.pdf used o
-n input line 74.
+n input line 76.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [10
 
  <../figures/2018-11-14_15:35:52_inter_curve0.pdf>]
-<../figures/2018-11-19_14:46:56_correlation_fig0.pdf, id=568, 578.16pt x 433.62
+<../figures/2018-11-19_14:46:56_correlation_fig0.pdf, id=586, 578.16pt x 433.62
 pt>
 File: ../figures/2018-11-19_14:46:56_correlation_fig0.pdf Graphic file (type pd
 f)
  <use ../figures/2018-11-19_14:46:56_correlation_fig0.pdf>
 Package pdftex.def Info: ../figures/2018-11-19_14:46:56_correlation_fig0.pdf us
-ed on input line 80.
+ed on input line 82.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [11
 
  <../figures/2018-11-19_14:46:56_correlation_fig0.pdf>]
-<../figures/2018-11-20_11:12:6_peaks_fig0.pdf, id=631, 578.16pt x 433.62pt>
+<../figures/2018-11-20_11:12:6_peaks_fig0.pdf, id=648, 578.16pt x 433.62pt>
 File: ../figures/2018-11-20_11:12:6_peaks_fig0.pdf Graphic file (type pdf)
 
 <use ../figures/2018-11-20_11:12:6_peaks_fig0.pdf>
 Package pdftex.def Info: ../figures/2018-11-20_11:12:6_peaks_fig0.pdf used on i
-nput line 86.
+nput line 88.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [12
 
  <../figures/2018-11-20_11:12:6_peaks_fig0.pdf>]
-<../figures/2018-11-27_12:41:56_Folded0.pdf, id=690, 578.16pt x 433.62pt>
+<../figures/2018-11-27_12:41:56_Folded0.pdf, id=706, 578.16pt x 433.62pt>
 File: ../figures/2018-11-27_12:41:56_Folded0.pdf Graphic file (type pdf)
 
 <use ../figures/2018-11-27_12:41:56_Folded0.pdf>
 Package pdftex.def Info: ../figures/2018-11-27_12:41:56_Folded0.pdf used on inp
-ut line 92.
+ut line 94.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [13
 
  <../figures/2018-11-27_12:41:56_Folded0.pdf>]
-<../figures/2018-11-27_14:45:48_fine_mesh0.pdf, id=760, 578.16pt x 433.62pt>
+<../figures/2018-11-27_14:45:48_fine_mesh0.pdf, id=775, 578.16pt x 433.62pt>
 File: ../figures/2018-11-27_14:45:48_fine_mesh0.pdf Graphic file (type pdf)
 
 <use ../figures/2018-11-27_14:45:48_fine_mesh0.pdf>
 Package pdftex.def Info: ../figures/2018-11-27_14:45:48_fine_mesh0.pdf used on 
-input line 100.
+input line 102.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [14
 
  <../figures/2018-11-27_14:45:48_fine_mesh0.pdf>]
-<../figures/2019-1-15_11:5:15_finemesh_TIC38846515.pdf, id=831, 462.52798pt x 3
+<../figures/2019-1-15_11:5:15_finemesh_TIC38846515.pdf, id=847, 462.52798pt x 3
 46.89601pt>
 File: ../figures/2019-1-15_11:5:15_finemesh_TIC38846515.pdf Graphic file (type 
 pdf)
  <use ../figures/2019-1-15_11:5:15_finemesh_TIC38846515.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_11:5:15_finemesh_TIC38846515.pdf 
-used on input line 106.
+used on input line 108.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
 
 [15
 
  <../figures/2019-1-15_11:5:15_finemesh_TIC38846515.pdf>]
-<../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC38846515.pdf, id=898, 578
+<../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC38846515.pdf, id=914, 578
 .16pt x 433.62pt>
 File: ../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC38846515.pdf Graphic
  file (type pdf)
 
 <use ../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC38846515.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC3
-8846515.pdf used on input line 112.
+8846515.pdf used on input line 114.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
 
 [16
 
  <../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC38846515.pdf>]
-<../figures/2018-11-27_14:45:48_peaks_fig0.pdf, id=966, 578.16pt x 433.62pt>
+<../figures/2018-11-27_14:45:48_peaks_fig0.pdf, id=982, 578.16pt x 433.62pt>
 File: ../figures/2018-11-27_14:45:48_peaks_fig0.pdf Graphic file (type pdf)
 
 <use ../figures/2018-11-27_14:45:48_peaks_fig0.pdf>
 Package pdftex.def Info: ../figures/2018-11-27_14:45:48_peaks_fig0.pdf used on 
-input line 118.
+input line 120.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 118.
+LaTeX Font Info:    Try loading font information for U+msa on input line 120.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 118.
+LaTeX Font Info:    Try loading font information for U+msb on input line 120.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 118.
+line 120.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
@@ -1098,186 +1112,201 @@ thkerncmss.
 [17
 
  <../figures/2018-11-27_14:45:48_peaks_fig0.pdf>]
-<../figures/2019-1-15_11:5:15_intercurve_TIC38846515.pdf, id=1025, 462.52798pt 
+<../figures/2019-1-15_11:5:15_intercurve_TIC38846515.pdf, id=1041, 462.52798pt 
 x 346.89601pt>
 File: ../figures/2019-1-15_11:5:15_intercurve_TIC38846515.pdf Graphic file (typ
 e pdf)
  <use ../figures/2019-1-15_11:5:15_intercurve_TIC38846515.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_11:5:15_intercurve_TIC38846515.pd
-f used on input line 124.
+f used on input line 126.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
 
 [18
 
  <../figures/2019-1-15_11:5:15_intercurve_TIC38846515.pdf>]
-<../figures/2019-1-15_16:2:14_normcurve_correlation_TIC38846515.pdf, id=1069, 5
+<../figures/2019-1-15_16:2:14_normcurve_correlation_TIC38846515.pdf, id=1085, 5
 78.16pt x 433.62pt>
 File: ../figures/2019-1-15_16:2:14_normcurve_correlation_TIC38846515.pdf Graphi
 c file (type pdf)
 
 <use ../figures/2019-1-15_16:2:14_normcurve_correlation_TIC38846515.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_normcurve_correlation_TIC
-38846515.pdf used on input line 130.
+38846515.pdf used on input line 132.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
 
 [19
 
  <../figures/2019-1-15_16:2:14_normcurve_correlation_TIC38846515.pdf>]
-<../figures/2019-1-15_16:2:14_peaks_TIC38846515.pdf, id=1140, 578.16pt x 433.62
+<../figures/2019-1-15_16:2:14_peaks_TIC38846515.pdf, id=1156, 578.16pt x 433.62
 pt>
 File: ../figures/2019-1-15_16:2:14_peaks_TIC38846515.pdf Graphic file (type pdf
 )
  <use ../figures/2019-1-15_16:2:14_peaks_TIC38846515.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_peaks_TIC38846515.pdf use
-d on input line 136.
+d on input line 138.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [20
 
  <../figures/2019-1-15_16:2:14_peaks_TIC38846515.pdf>]
-<../figures/2019-1-15_16:2:14_linear_fit_TIC38846515.pdf, id=1205, 578.16pt x 4
+<../figures/2019-1-15_16:2:14_linear_fit_TIC38846515.pdf, id=1220, 578.16pt x 4
 33.62pt>
 File: ../figures/2019-1-15_16:2:14_linear_fit_TIC38846515.pdf Graphic file (typ
 e pdf)
  <use ../figures/2019-1-15_16:2:14_linear_fit_TIC38846515.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_linear_fit_TIC38846515.pd
-f used on input line 142.
+f used on input line 144.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [21
 
  <../figures/2019-1-15_16:2:14_linear_fit_TIC38846515.pdf>]
-<../figures/2019-1-15_16:2:14_Folded_TIC38846515.pdf, id=1274, 578.16pt x 433.6
+<../figures/2019-1-15_16:2:14_Folded_TIC38846515.pdf, id=1288, 578.16pt x 433.6
 2pt>
 File: ../figures/2019-1-15_16:2:14_Folded_TIC38846515.pdf Graphic file (type pd
 f)
  <use ../figures/2019-1-15_16:2:14_Folded_TIC38846515.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_Folded_TIC38846515.pdf us
-ed on input line 150.
+ed on input line 152.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [22
 
  <../figures/2019-1-15_16:2:14_Folded_TIC38846515.pdf>]
-<../figures/2019-1-15_16:2:14_Folded_TIC76989773.pdf, id=1343, 578.16pt x 433.6
+<../figures/2019-1-15_16:2:14_Folded_TIC76989773.pdf, id=1358, 578.16pt x 433.6
 2pt>
 File: ../figures/2019-1-15_16:2:14_Folded_TIC76989773.pdf Graphic file (type pd
 f)
  <use ../figures/2019-1-15_16:2:14_Folded_TIC76989773.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_Folded_TIC76989773.pdf us
-ed on input line 156.
+ed on input line 158.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [23
 
  <../figures/2019-1-15_16:2:14_Folded_TIC76989773.pdf>]
-<../figures/2019-1-15_16:2:14_Folded_TIC201248411.pdf, id=1413, 578.16pt x 433.
+<../figures/2019-1-15_16:2:14_Folded_TIC201248411.pdf, id=1428, 578.16pt x 433.
 62pt>
 File: ../figures/2019-1-15_16:2:14_Folded_TIC201248411.pdf Graphic file (type p
 df)
  <use ../figures/2019-1-15_16:2:14_Folded_TIC201248411.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_Folded_TIC201248411.pdf u
-sed on input line 162.
+sed on input line 164.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [24
 
  <../figures/2019-1-15_16:2:14_Folded_TIC201248411.pdf>]
-<../figures/2019-1-16_12:58:51_Folded_TIC29344935.pdf, id=1484, 462.52798pt x 3
+<../figures/2019-1-16_12:58:51_Folded_TIC29344935.pdf, id=1499, 462.52798pt x 3
 46.89601pt>
 File: ../figures/2019-1-16_12:58:51_Folded_TIC29344935.pdf Graphic file (type p
 df)
  <use ../figures/2019-1-16_12:58:51_Folded_TIC29344935.pdf>
 Package pdftex.def Info: ../figures/2019-1-16_12:58:51_Folded_TIC29344935.pdf u
-sed on input line 168.
+sed on input line 170.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [25
 
  <../figures/2019-1-16_12:58:51_Folded_TIC29344935.pdf>]
-<../figures/2019-1-16_12:58:51_Folded_TIC25375553.pdf, id=1556, 462.52798pt x 3
+<../figures/2019-1-16_12:58:51_Folded_TIC25375553.pdf, id=1571, 462.52798pt x 3
 46.89601pt>
 File: ../figures/2019-1-16_12:58:51_Folded_TIC25375553.pdf Graphic file (type p
 df)
  <use ../figures/2019-1-16_12:58:51_Folded_TIC25375553.pdf>
 Package pdftex.def Info: ../figures/2019-1-16_12:58:51_Folded_TIC25375553.pdf u
-sed on input line 174.
+sed on input line 176.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [26
 
  <../figures/2019-1-16_12:58:51_Folded_TIC25375553.pdf>]
-<../figures/2019-1-16_13:47:28_Folded_TIC25375553.pdf, id=1627, 462.52798pt x 3
+<../figures/2019-1-16_13:47:28_Folded_TIC25375553.pdf, id=1641, 462.52798pt x 3
 46.89601pt>
 File: ../figures/2019-1-16_13:47:28_Folded_TIC25375553.pdf Graphic file (type p
 df)
  <use ../figures/2019-1-16_13:47:28_Folded_TIC25375553.pdf>
 Package pdftex.def Info: ../figures/2019-1-16_13:47:28_Folded_TIC25375553.pdf u
-sed on input line 180.
+sed on input line 182.
 (pdftex.def)             Requested size: 276.559pt x 207.42992pt.
  [27
 
  <../figures/2019-1-16_13:47:28_Folded_TIC25375553.pdf>]
-<../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC89020549.pdf, id=1699, 57
+<../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC89020549.pdf, id=1712, 57
 8.16pt x 433.62pt>
 File: ../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC89020549.pdf Graphic
  file (type pdf)
 
 <use ../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC89020549.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC8
-9020549.pdf used on input line 188.
+9020549.pdf used on input line 190.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
 
 [28
 
  <../figures/2019-1-15_16:2:14_normcurve_lightcurve_TIC89020549.pdf>]
-<../figures/2019-1-15_16:2:14_normcurve_correlation_TIC89020549.pdf, id=1768, 5
+<../figures/2019-1-15_16:2:14_normcurve_correlation_TIC89020549.pdf, id=1780, 5
 78.16pt x 433.62pt>
 File: ../figures/2019-1-15_16:2:14_normcurve_correlation_TIC89020549.pdf Graphi
 c file (type pdf)
 
 <use ../figures/2019-1-15_16:2:14_normcurve_correlation_TIC89020549.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_normcurve_correlation_TIC
-89020549.pdf used on input line 194.
+89020549.pdf used on input line 196.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
 
 [29
 
  <../figures/2019-1-15_16:2:14_normcurve_correlation_TIC89020549.pdf>]
-<../figures/Corr-spektrum_zoom.pdf, id=1836, 578.16pt x 433.62pt>
+<../figures/Corr-spektrum_zoom.pdf, id=1849, 578.16pt x 433.62pt>
 File: ../figures/Corr-spektrum_zoom.pdf Graphic file (type pdf)
 
 <use ../figures/Corr-spektrum_zoom.pdf>
 Package pdftex.def Info: ../figures/Corr-spektrum_zoom.pdf used on input line 2
-00.
+02.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [30
 
  <../figures/Corr-spektrum_zoom.pdf>]
-<../figures/2019-1-15_16:2:14_linear_fit_TIC89020549.pdf, id=1901, 578.16pt x 4
+<../figures/2019-1-15_16:2:14_linear_fit_TIC89020549.pdf, id=1915, 578.16pt x 4
 33.62pt>
 File: ../figures/2019-1-15_16:2:14_linear_fit_TIC89020549.pdf Graphic file (typ
 e pdf)
  <use ../figures/2019-1-15_16:2:14_linear_fit_TIC89020549.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_linear_fit_TIC89020549.pd
-f used on input line 206.
+f used on input line 208.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [31
 
  <../figures/2019-1-15_16:2:14_linear_fit_TIC89020549.pdf>]
-<../figures/2019-1-15_16:2:14_Folded_TIC89020549.pdf, id=1970, 578.16pt x 433.6
+<../figures/2019-1-15_16:2:14_Folded_TIC89020549.pdf, id=1984, 578.16pt x 433.6
 2pt>
 File: ../figures/2019-1-15_16:2:14_Folded_TIC89020549.pdf Graphic file (type pd
 f)
  <use ../figures/2019-1-15_16:2:14_Folded_TIC89020549.pdf>
 Package pdftex.def Info: ../figures/2019-1-15_16:2:14_Folded_TIC89020549.pdf us
-ed on input line 212.
+ed on input line 214.
 (pdftex.def)             Requested size: 276.559pt x 207.41403pt.
  [32
 
- <../figures/2019-1-15_16:2:14_Folded_TIC89020549.pdf>]
-<../figures/MCMC_fit0.png, id=2041, 462.528pt x 346.896pt>
+ <../figures/2019-1-15_16:2:14_Folded_TIC89020549.pdf>] [33
+
+]
+<../figures/Trace_for_radius_Ratio.pdf, id=2085, 291.24811pt x 346.89601pt>
+File: ../figures/Trace_for_radius_Ratio.pdf Graphic file (type pdf)
+
+<use ../figures/Trace_for_radius_Ratio.pdf>
+Package pdftex.def Info: ../figures/Trace_for_radius_Ratio.pdf used on input li
+ne 266.
+(pdftex.def)             Requested size: 153.64493pt x 183.0071pt.
+ [34
+
+ <../figures/Trace_for_radius_Ratio.pdf>] [35
+
+] <../figures/MCMC_fit0.png, id=2174, 462.528pt x 346.896pt>
 File: ../figures/MCMC_fit0.png Graphic file (type png)
 
 <use ../figures/MCMC_fit0.png>
-Package pdftex.def Info: ../figures/MCMC_fit0.png used on input line 218.
+Package pdftex.def Info: ../figures/MCMC_fit0.png used on input line 285.
 (pdftex.def)             Requested size: 276.559pt x 207.4299pt.
- [33
+ [36
 
- <../figures/MCMC_fit0.png>]
+ <../figures/MCMC_fit0.png>] [37
+
+]
 \tf@nav=\write6
 \openout6 = `exo_proj_pres.nav'.
 
@@ -1287,44 +1316,44 @@ Package pdftex.def Info: ../figures/MCMC_fit0.png used on input line 218.
 \tf@snm=\write8
 \openout8 = `exo_proj_pres.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 220.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 220.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 298.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 298.
 
 (./exo_proj_pres.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 220.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 220.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 298.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 298.
+Package rerunfilecheck Info: File `exo_proj_pres.out' has not changed.
+(rerunfilecheck)             Checksum: 087A9FD5F4803667C9792F60C0F24B24;314.
 
-
-Package rerunfilecheck Warning: File `exo_proj_pres.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `exo_proj_pres.out':
-(rerunfilecheck)             Before: 688FB3A8DAE805B66133BD674EA87C2E;48
-(rerunfilecheck)             After:  087A9FD5F4803667C9792F60C0F24B24;314.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 220.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 298.
  ) 
 Here is how much of TeX's memory you used:
- 16923 strings out of 493029
- 329485 string characters out of 6136233
- 388243 words of memory out of 5000000
- 19959 multiletter control sequences out of 15000+600000
- 9862 words of font info for 36 fonts, out of 8000000 for 9000
+ 17094 strings out of 493029
+ 332628 string characters out of 6136233
+ 393501 words of memory out of 5000000
+ 20110 multiletter control sequences out of 15000+600000
+ 15840 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,15n,55p,413b,557s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmssi12.pfb>
-Output written on exo_proj_pres.pdf (33 pages, 5938337 bytes).
+ 56i,15n,55p,413b,639s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy8.pfb>
+Output written on exo_proj_pres.pdf (37 pages, 6044029 bytes).
 PDF statistics:
- 2105 PDF objects out of 2487 (max. 8388607)
- 1032 compressed objects within 11 object streams
- 72 named destinations out of 1000 (max. 500000)
- 211 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2285 PDF objects out of 2487 (max. 8388607)
+ 1170 compressed objects within 12 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 248 words of extra memory for PDF output out of 10000 (max. 10000000)
 
